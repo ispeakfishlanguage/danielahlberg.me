@@ -166,6 +166,47 @@ h1.fade-text.display-1 {
     }
 }
 
+/* Navbar Logo Styles */
+.navbar-brand {
+    position: relative;
+    display: inline-block;
+}
+
+.navbar-logo {
+    height: 40px;
+    width: auto;
+    transition: opacity 0.3s ease;
+}
+
+/* Show dark logo by default (when navbar is transparent) */
+.navbar-logo-dark {
+    opacity: 1;
+}
+
+.navbar-logo-light {
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+}
+
+/* When navbar has scrolled/changed color, show light logo */
+.navbar[color-on-scroll] .navbar-logo-dark {
+    opacity: 0;
+}
+
+.navbar[color-on-scroll] .navbar-logo-light {
+    opacity: 1;
+}
+
+/* Responsive logo sizing */
+@media (max-width: 768px) {
+    .navbar-logo {
+        height: 35px;
+    }
+}
+
 .navbar-brand h1 {
     font-family: var(--font-heading-primary);
     font-size: 1.8rem;
