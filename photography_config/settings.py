@@ -53,7 +53,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-ROOT_URLCONF = 'photography_site.urls'
+ROOT_URLCONF = 'photography_config.urls'
 
 TEMPLATES = [
     {
@@ -71,7 +71,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'photography_site.wsgi.application'
+WSGI_APPLICATION = 'photography_config.wsgi.application'
 
 # Database
 DATABASES = {
