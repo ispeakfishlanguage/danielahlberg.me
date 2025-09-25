@@ -14,10 +14,12 @@ env = environ.Env(
 environ.Env.read_env(BASE_DIR / '.env')
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('SECRET_KEY', default='django-insecure-your-secret-key-here')
+# Generate a default key for Railway if not provided
+import secrets
+SECRET_KEY = env('SECRET_KEY', default=secrets.token_urlsafe(50) if 'RAILWAY_ENVIRONMENT' in os.environ else 'django-insecure-your-secret-key-here')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG')
+DEBUG = env('DEBUG', default=False if 'RAILWAY_ENVIRONMENT' in os.environ else True)
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
 
