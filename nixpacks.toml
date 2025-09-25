@@ -1,13 +1,7 @@
 [phases.build]
 cmds = [
-  "python -m pip install --upgrade pip",
-  "python -m pip install -r requirements.txt"
+  "pip install -r requirements.txt"
 ]
 
 [phases.deploy]
-cmd = "bash start_railway.sh"
-
-[variables]
-PYTHONPATH = "/app"
-PYTHONUNBUFFERED = "1"
-DISABLE_COLLECTSTATIC = "0"
+cmd = "python manage.py migrate --noinput && python manage.py collectstatic --noinput && gunicorn photography_config.wsgi:application --bind 0.0.0.0:${PORT:-8000}"
