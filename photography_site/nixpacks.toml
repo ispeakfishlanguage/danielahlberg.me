@@ -1,0 +1,8 @@
+[phases.build]
+cmds = ["python -m pip install -r requirements.txt"]
+
+[phases.deploy]
+cmd = "python manage.py collectstatic --noinput && python manage.py migrate && gunicorn photography_site.wsgi"
+
+[variables]
+PYTHONPATH = "/app"

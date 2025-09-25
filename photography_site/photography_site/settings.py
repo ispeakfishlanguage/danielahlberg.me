@@ -21,7 +21,9 @@ DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
 
-# Add Render.com to allowed hosts in production
+# Add Railway and Render to allowed hosts in production
+if 'RAILWAY_ENVIRONMENT' in os.environ:
+    ALLOWED_HOSTS.extend([os.environ.get('RAILWAY_PUBLIC_DOMAIN', ''), os.environ.get('RAILWAY_PRIVATE_DOMAIN', '')])
 if 'RENDER' in os.environ:
     ALLOWED_HOSTS.append(os.environ.get('RENDER_EXTERNAL_HOSTNAME'))
 
