@@ -178,7 +178,7 @@ h1.fade-text.display-1 {
     transition: opacity 0.3s ease;
 }
 
-/* Show dark logo by default (when navbar is transparent) */
+/* Show dark logo when navbar is transparent (black text) */
 .navbar-logo-dark {
     opacity: 1;
 }
@@ -191,12 +191,21 @@ h1.fade-text.display-1 {
     transform: translateY(-50%);
 }
 
-/* When navbar has scrolled/changed color, show light logo */
-.navbar[color-on-scroll] .navbar-logo-dark {
+/* When navbar has scrolled/changed to solid background, show light/white logo */
+.navbar-transparent.navbar-scrolled .navbar-logo-dark {
     opacity: 0;
 }
 
-.navbar[color-on-scroll] .navbar-logo-light {
+.navbar-transparent.navbar-scrolled .navbar-logo-light {
+    opacity: 1;
+}
+
+/* Alternative selector for when navbar changes background */
+.navbar:not(.navbar-transparent) .navbar-logo-dark {
+    opacity: 0;
+}
+
+.navbar:not(.navbar-transparent) .navbar-logo-light {
     opacity: 1;
 }
 
