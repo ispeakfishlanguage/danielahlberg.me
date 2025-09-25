@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Gallery - Daniel Ahlberg{% endblock %}
+
+{% block content %}
+<section class="py-5 mt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 class="h1-seo display-5 fw-light text-uppercase letter-spacing-wide mb-4 font-heading-secondary">
+                    My Photo Gallery
+                </h1>
+                <p class="lead font-serif">Welcome, {{ client_profile.user.get_full_name|default:client_profile.user.username }}</p>
+
+                {% if client_profile.session_type %}
+                <div class="alert alert-info" role="alert">
+                    <strong>Session Type:</strong> {{ client_profile.session_type }}
+                    {% if client_profile.session_date %}
+                        <br><strong>Session Date:</strong> {{ client_profile.session_date|date:"F d, Y" }}
+                    {% endif %}
+                </div>
+                {% endif %}
+
+                {% if galleries %}
+                <h3 class="h4 fw-light mb-4 font-heading-primary">Your Photo Galleries</h3>
+                <div class="row">
+                    {% for gallery in galleries %}
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100 shadow-sm">
+                            {% if gallery.cover_photo %}
+                            <img src="{% if gallery.cover_photo.thumbnail %}{{ gallery.cover_photo.thumbnail.url }}{% else %}{{ gallery.cover_photo.image.url }}{% endif %}"
+                                 class="card-img-top" style="height: 200px; object-fit: cover;" alt="{{ gallery.name }}">
+                            {% else %}
+                            <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px;">
+                                <span class="text-muted">No cover photo</span>
+                            </div>
+                            {% endif %}
+                            <div class="card-body">
+                                <h5 class="card-title font-heading-primary">{{ gallery.name }}</h5>
+                                {% if gallery.description %}
+                                <p class="card-text small font-serif">{{ gallery.description|truncatewords:20 }}</p>
+                                {% endif %}
+                                <p class="card-text">
+                                    <small class="text-muted">
+                                        {{ gallery.photos.count }} photo{{ gallery.photos.count|pluralize }}
+                                        {% if gallery.password_protected %}
+                                            <span class="badge bg-warning text-dark ms-2">Protected</span>
+                                        {% endif %}
+                                    </small>
+                                </p>
+                            </div>
+                            <div class="card-footer bg-white border-0">
+                                <a href="{% url 'portfolio:gallery_detail' gallery.slug %}" class="btn btn-dark btn-sm fw-light text-uppercase font-modern">View Gallery</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <div class="text-center py-5">
+                    <h3 class="h4 fw-light mb-3 font-heading-primary">No Galleries Available</h3>
+                    <p class="font-serif">Your photo galleries will appear here once they're ready.</p>
+                    <a href="{% url 'portfolio:contact' %}" class="btn btn-outline-dark fw-light text-uppercase px-4 py-2 font-modern">Contact Daniel</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

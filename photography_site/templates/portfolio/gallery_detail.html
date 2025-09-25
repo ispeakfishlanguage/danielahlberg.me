@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ gallery.name }} - Daniel Ahlberg{% endblock %}
+
+{% block content %}
+<section class="py-5 mt-5">
+    <div class="container-fluid">
+        <div class="text-center mb-5">
+            <h2 class="display-5 fw-light text-uppercase letter-spacing-wide font-heading-secondary">{{ gallery.name }}</h2>
+            {% if gallery.description %}
+            <p class="lead fw-light font-serif">{{ gallery.description }}</p>
+            {% endif %}
+            <p class="text-muted font-modern">{{ photos.count }} photo{{ photos.count|pluralize }}</p>
+        </div>
+
+        {% if photos %}
+        <div class="row g-1" style="max-width: 1400px; margin: 0 auto;">
+            {% for photo in photos %}
+            <div class="col-lg-4 col-md-6 col-12 gallery-item">
+                <img src="{% if photo.thumbnail %}{{ photo.thumbnail.url }}{% else %}{{ photo.image.url }}{% endif %}"
+                     alt="{{ photo.title }}"
+                     class="w-100 h-100 object-fit-cover gallery-image"
+                     style="aspect-ratio: 1; cursor: pointer;"
+                     data-full-image="{{ photo.image.url }}"
+                     data-title="{{ photo.title }}"
+                     data-description="{{ photo.description }}"
+                     data-location="{{ photo.location }}"
+                     data-date="{{ photo.date_taken|date:'F d, Y'|default:'' }}">
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="{% url 'portfolio:client_gallery' %}" class="btn btn-outline-dark fw-light text-uppercase px-4 py-2 font-modern">
+                ← Back to My Galleries
+            </a>
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <h3 class="h4 fw-light mb-3 font-heading-primary">No Photos Available</h3>
+            <p class="font-serif">Photos will be added to this gallery soon.</p>
+            <a href="{% url 'portfolio:client_gallery' %}" class="btn btn-outline-dark fw-light text-uppercase px-4 py-2 font-modern">
+                ← Back to My Galleries
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const galleryImages = document.querySelectorAll('.gallery-image');
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.querySelector('.lightbox-content');
+    const lightboxCaption = document.querySelector('.lightbox-caption');
+    const lightboxClose = document.querySelector('.lightbox-close');
+
+    galleryImages.forEach(img => {
+        img.addEventListener('click', function() {
+            const fullImage = this.getAttribute('data-full-image');
+            const title = this.getAttribute('data-title');
+            const description = this.getAttribute('data-description');
+            const location = this.getAttribute('data-location');
+            const date = this.getAttribute('data-date');
+
+            lightboxImg.src = fullImage;
+            lightboxImg.alt = title;
+
+            let captionHtml = '';
+            if (title) captionHtml += `<h3>${title}</h3>`;
+            if (description) captionHtml += `<p>${description}</p>`;
+            if (location || date) {
+                captionHtml += '<p class="small">';
+                if (location) captionHtml += location;
+                if (location && date) captionHtml += ' • ';
+                if (date) captionHtml += date;
+                captionHtml += '</p>';
+            }
+
+            lightboxCaption.innerHTML = captionHtml;
+            lightbox.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        });
+    });
+
+    function closeLightbox() {
+        lightbox.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+
+    lightboxClose.addEventListener('click', closeLightbox);
+
+    lightbox.addEventListener('click', function(e) {
+        if (e.target === lightbox) {
+            closeLightbox();
+        }
+    });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && lightbox.style.display === 'block') {
+            closeLightbox();
+        }
+    });
+});
+</script>
+{% endblock %}

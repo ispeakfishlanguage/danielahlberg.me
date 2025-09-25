@@ -1,0 +1,204 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" prefix="og: http://ogp.me/ns#">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Meta Tags -->
+    <title>{% block title %}Daniel Ahlberg - Stockholm Photographer | Portrait & Event Photography{% endblock %}</title>
+    <meta name="description" content="{% block description %}Professional photographer in Stockholm, Sweden specializing in portrait, landscape, and event photography. Capturing authentic moments with artistic vision.{% endblock %}">
+    <meta name="keywords" content="{% block keywords %}photographer Stockholm, portrait photography Sweden, event photographer, landscape photography, professional photography Stockholm, Swedish photographer, photography services{% endblock %}">
+    <meta name="author" content="Daniel Ahlberg">
+    <meta name="robots" content="{% block robots %}index, follow{% endblock %}">
+    <link rel="canonical" href="{% block canonical %}{{ request.build_absolute_uri }}{% endblock %}">
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="{% block og_title %}Daniel Ahlberg - Stockholm Photographer{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Professional photographer in Stockholm, Sweden specializing in portrait, landscape, and event photography.{% endblock %}">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:url" content="{% block og_url %}{{ request.build_absolute_uri }}{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/og-image.jpg' %}{% endblock %}">
+    <meta property="og:site_name" content="Daniel Ahlberg Photography">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="{% block twitter_card %}summary_large_image{% endblock %}">
+    <meta name="twitter:title" content="{% block twitter_title %}Daniel Ahlberg - Stockholm Photographer{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Professional photographer in Stockholm, Sweden specializing in portrait, landscape, and event photography.{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{{ request.scheme }}://{{ request.get_host }}{% static 'images/twitter-card.jpg' %}{% endblock %}">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
+
+    <!-- Verification Meta Tags (will be populated later) -->
+    <meta name="google-site-verification" content="{% block google_verification %}{% endblock %}">
+    <meta name="msvalidate.01" content="{% block bing_verification %}{% endblock %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@200;300;400;500;600&family=Lato:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Oswald:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Poppins:wght@200;300;400;500;600&family=Source+Serif+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    {% block extra_css %}{% endblock %}
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {% block structured_data %}
+    {
+        "@context": "https://schema.org",
+        "@type": "ProfessionalService",
+        "name": "Daniel Ahlberg Photography",
+        "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/daniel-ahlberg.jpg' %}",
+        "description": "Professional photographer in Stockholm, Sweden specializing in portrait, landscape, and event photography.",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Stockholm",
+            "addressCountry": "Sweden"
+        },
+        "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": 59.3293,
+            "longitude": 18.0686
+        },
+        "url": "{{ request.scheme }}://{{ request.get_host }}",
+        "telephone": "+46123456789",
+        "email": "hello@danielahlberg.me",
+        "priceRange": "$$",
+        "serviceType": ["Portrait Photography", "Event Photography", "Landscape Photography", "Commercial Photography"],
+        "areaServed": {
+            "@type": "Country",
+            "name": "Sweden"
+        },
+        "founder": {
+            "@type": "Person",
+            "name": "Daniel Ahlberg",
+            "jobTitle": "Professional Photographer",
+            "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/daniel-ahlberg.jpg' %}",
+            "sameAs": [
+                "https://instagram.com/danielahlberg",
+                "https://linkedin.com/in/danielahlberg"
+            ]
+        }
+    }
+    {% endblock %}
+    </script>
+</head>
+<body class="{% block body_class %}{% endblock %} d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg fixed-top navbar-transparent" color-on-scroll="500">
+        <div class="container">
+            <div class="navbar-translate">
+                <a class="navbar-brand" href="{% url 'portfolio:home' %}" rel="tooltip" title="Daniel Ahlberg Photography" data-placement="bottom">
+                    <h1 class="mb-0">Daniel Ahlberg</h1>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navigation" aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-bar bar1"></span>
+                    <span class="navbar-toggler-bar bar2"></span>
+                    <span class="navbar-toggler-bar bar3"></span>
+                </button>
+            </div>
+
+            <div class="collapse navbar-collapse" id="navigation">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'portfolio:home' %}">
+                            <p>Home</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle {% if request.resolver_match.url_name == 'portfolio' %}active{% endif %}" id="portfolioDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                            <p>Portfolio</p>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="portfolioDropdown">
+                            <a class="dropdown-item" href="{% url 'portfolio:portfolio' %}">
+                                All
+                            </a>
+                            <a class="dropdown-item" href="{% url 'portfolio:portfolio' %}?category=portraits">
+                                Portraits
+                            </a>
+                            <a class="dropdown-item" href="{% url 'portfolio:portfolio' %}?category=landscape">
+                                Landscapes
+                            </a>
+                            <a class="dropdown-item" href="{% url 'portfolio:portfolio' %}?category=events">
+                                Events
+                            </a>
+                            <a class="dropdown-item" href="{% url 'portfolio:portfolio' %}?category=projects">
+                                Projects
+                            </a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'portfolio:about' %}">
+                            <p>About</p>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'portfolio:contact' %}">
+                            <p>Contact</p>
+                        </a>
+                    </li>
+
+                    {% if user.is_authenticated %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle {% if request.resolver_match.url_name == 'client_gallery' %}active{% endif %}" id="clientDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                                <p>My Gallery</p>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="clientDropdown">
+                                <a class="dropdown-item" href="{% url 'portfolio:client_gallery' %}">
+                                    View Photos
+                                </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="{% url 'portfolio:logout' %}">
+                                    Logout
+                                </a>
+                            </div>
+                        </li>
+                    {% else %}
+                        <li class="nav-item">
+                            <a class="nav-link {% if request.resolver_match.url_name == 'login' %}active{% endif %}" href="{% url 'portfolio:login' %}">
+                                <p>Client Login</p>
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-grow-1">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show m-0" role="alert" style="margin-top: 76px !important;">
+                    <div class="container">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-dark text-light text-center py-4">
+        <div class="container">
+            <p class="mb-0 fw-light">&copy; {% now "Y" %} Daniel Ahlberg. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <span class="lightbox-close">&times;</span>
+        <img class="lightbox-content" alt="">
+        <div class="lightbox-caption"></div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/dixonandmoe/rellax@master/rellax.min.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

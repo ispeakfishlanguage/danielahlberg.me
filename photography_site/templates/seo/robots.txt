@@ -1,0 +1,26 @@
+User-agent: *
+Allow: /
+Allow: /portfolio/
+Allow: /about/
+Allow: /contact/
+Allow: /static/
+
+# Block private client areas
+Disallow: /admin/
+Disallow: /gallery/
+Disallow: /login/
+
+# Block search and filter URLs with parameters
+Disallow: /*?page=
+Disallow: /*?category=
+
+# Allow important files
+Allow: /robots.txt
+Allow: /sitemap.xml
+Allow: /favicon.ico
+
+# Sitemap location
+Sitemap: {{ sitemap_url }}
+
+# Crawl delay (optional)
+Crawl-delay: 1

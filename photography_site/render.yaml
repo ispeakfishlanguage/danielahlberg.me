@@ -1,0 +1,28 @@
+services:
+  - type: web
+    name: daniel-ahlberg-photography
+    env: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn photography_site.wsgi:application"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.7
+      - key: DEBUG
+        value: False
+      - key: SECRET_KEY
+        generateValue: true
+      - key: ALLOWED_HOSTS
+        value: .onrender.com
+      - key: DATABASE_URL
+        fromDatabase:
+          name: daniel-ahlberg-db
+          property: connectionString
+
+  - type: redis
+    name: daniel-ahlberg-redis
+    ipAllowList: []
+
+databases:
+  - name: daniel-ahlberg-db
+    databaseName: photography_site
+    user: photography_user

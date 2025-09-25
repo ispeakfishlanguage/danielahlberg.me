@@ -1,0 +1,6 @@
+Contact: mailto:security@{{ domain }}
+Contact: mailto:hello@{{ domain }}
+Expires: 2025-12-31T23:59:59.000Z
+Acknowledgments: https://{{ domain }}/security/acknowledgments
+Preferred-Languages: en, sv
+Canonical: https://{{ domain }}/.well-known/security.txt

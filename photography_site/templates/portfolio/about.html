@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Daniel Ahlberg - Professional Photographer in Stockholm{% endblock %}
+{% block description %}Meet Daniel Ahlberg, a professional photographer from Stockholm, Sweden with 10+ years of experience in portrait, landscape, and event photography. Learn about his artistic vision and services.{% endblock %}
+{% block keywords %}about Daniel Ahlberg, Stockholm photographer biography, professional photographer Sweden, photography services Stockholm, photographer experience{% endblock %}
+
+{% block structured_data %}
+{
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Daniel Ahlberg",
+    "jobTitle": "Professional Photographer",
+    "description": "Professional photographer from Stockholm, Sweden with over 10 years of experience specializing in portrait, landscape, and event photography",
+    "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/daniel-ahlberg.jpg' %}",
+    "url": "{{ request.build_absolute_uri }}",
+    "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Stockholm",
+        "addressCountry": "Sweden"
+    },
+    "email": "hello@danielahlberg.me",
+    "telephone": "+46123456789",
+    "worksFor": {
+        "@type": "Organization",
+        "name": "Daniel Ahlberg Photography"
+    },
+    "knowsAbout": [
+        "Portrait Photography",
+        "Landscape Photography",
+        "Event Photography",
+        "Wedding Photography",
+        "Commercial Photography"
+    ],
+    "hasOccupation": {
+        "@type": "Occupation",
+        "name": "Professional Photographer",
+        "occupationLocation": {
+            "@type": "City",
+            "name": "Stockholm"
+        },
+        "experienceRequirements": "10+ years"
+    },
+    "sameAs": [
+        "https://instagram.com/danielahlberg",
+        "https://linkedin.com/in/danielahlberg"
+    ]
+}
+{% endblock %}
+
+{% block content %}
+<section class="py-5 mt-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 col-md-7">
+                <h1 class="h1-seo display-5 fw-light text-uppercase letter-spacing-wide mb-4 font-heading-secondary">About Daniel Ahlberg</h1>
+                <p class="lead fw-light lh-lg mb-4 font-serif">Born and raised in Stockholm, Sweden, I'm a 32-year-old photographer passionate about capturing the authentic moments that make life extraordinary. With over a decade of experience, I specialize in portrait, landscape, and event photography.</p>
+                <p class="fw-light lh-lg mb-4 font-serif">My approach is rooted in storytelling – every image should convey emotion and tell a unique story. Whether it's an intimate portrait session, a breathtaking Swedish landscape, or a joyous celebration, I strive to create photographs that resonate with genuine human connection.</p>
+                <p class="fw-light lh-lg font-serif">When I'm not behind the camera, you can find me exploring Stockholm's hidden gems or hiking through Sweden's beautiful countryside, always seeking new perspectives and inspiration.</p>
+
+                <div class="mt-5">
+                    <h3 class="h4 fw-light mb-3 font-heading-primary">Services</h3>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <h4 class="h6 fw-normal font-modern">Portrait Photography</h4>
+                            <p class="small font-serif">Professional headshots, family portraits, and personal branding sessions.</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <h4 class="h6 fw-normal font-modern">Event Photography</h4>
+                            <p class="small font-serif">Weddings, corporate events, and special celebrations captured with artistry.</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <h4 class="h6 fw-normal font-modern">Landscape Photography</h4>
+                            <p class="small font-serif">Sweden's natural beauty documented through fine art photography.</p>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <h4 class="h6 fw-normal font-modern">Commercial Work</h4>
+                            <p class="small font-serif">Product photography, brand imagery, and commercial projects.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <a href="{% url 'portfolio:contact' %}" class="btn btn-dark fw-light text-uppercase px-4 py-2 font-modern">Get In Touch</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-5 text-center">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                     alt="Daniel Ahlberg - Stockholm Photographer"
+                     class="img-fluid rounded shadow">
+
+                <div class="mt-4 text-start">
+                    <h4 class="h6 fw-light mb-3 font-heading-primary">Experience</h4>
+                    <ul class="list-unstyled small font-serif">
+                        <li class="mb-2">• 10+ years professional photography</li>
+                        <li class="mb-2">• Based in Stockholm, Sweden</li>
+                        <li class="mb-2">• Available internationally</li>
+                        <li class="mb-2">• Published in local magazines</li>
+                        <li class="mb-2">• 500+ satisfied clients</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

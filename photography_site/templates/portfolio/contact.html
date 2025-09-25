@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contact Daniel Ahlberg - Book Photography Session in Stockholm{% endblock %}
+{% block description %}Contact Daniel Ahlberg for professional photography services in Stockholm. Book portrait, event, or landscape photography sessions. Call +46 123 456 789 or email hello@danielahlberg.me{% endblock %}
+{% block keywords %}contact photographer Stockholm, book photography session, Daniel Ahlberg contact, Stockholm photography booking, professional photographer contact{% endblock %}
+
+{% block structured_data %}
+{
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "name": "Contact Daniel Ahlberg Photography",
+    "description": "Contact form and information for booking photography services with Daniel Ahlberg in Stockholm, Sweden",
+    "url": "{{ request.build_absolute_uri }}",
+    "mainEntity": {
+        "@type": "ProfessionalService",
+        "name": "Daniel Ahlberg Photography",
+        "telephone": "+46123456789",
+        "email": "hello@danielahlberg.me",
+        "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Stockholm",
+            "addressCountry": "Sweden"
+        },
+        "openingHours": "Mo-Fr 09:00-18:00",
+        "serviceType": ["Portrait Photography", "Event Photography", "Commercial Photography"]
+    }
+}
+{% endblock %}
+
+{% block content %}
+<section class="py-5 bg-dark text-light mt-5">
+    <div class="container">
+        <h1 class="h1-seo text-center mb-5 display-5 fw-light text-uppercase letter-spacing-wide font-heading-secondary">Contact Daniel Ahlberg</h1>
+        <div class="row">
+            <div class="col-lg-6 mb-4">
+                <h3 class="h4 fw-light mb-3 font-heading-primary">Let's Create Something Beautiful</h3>
+                <p class="fw-light mb-4 font-modern">Based in Stockholm, Sweden. Available for local and international projects.</p>
+                <div class="mb-4">
+                    <div class="mb-2">
+                        <strong class="text-light">Email:</strong>
+                        <a href="mailto:hello@danielahlberg.me" class="text-decoration-none ms-2" style="color: #dc3545;">hello@danielahlberg.me</a>
+                    </div>
+                    <div class="mb-2">
+                        <strong class="text-light">Phone:</strong>
+                        <a href="tel:+46123456789" class="text-decoration-none ms-2" style="color: #dc3545;">+46 123 456 789</a>
+                    </div>
+                    <div class="mb-2">
+                        <strong class="text-light">Location:</strong>
+                        <span class="ms-2">Stockholm, Sweden</span>
+                    </div>
+                </div>
+                <div class="mb-4">
+                    <a href="mailto:hello@danielahlberg.me?subject=Photography%20Booking%20Inquiry"
+                       class="btn btn-outline-light fw-light text-uppercase px-4 py-2 font-modern">Book a Session</a>
+                </div>
+                <div class="d-flex gap-3">
+                    <a href="#" class="text-decoration-none fw-light font-modern" style="color: #dc3545;">Instagram</a>
+                    <a href="#" class="text-decoration-none fw-light font-modern" style="color: #dc3545;">LinkedIn</a>
+                    <a href="#" class="text-decoration-none fw-light font-modern" style="color: #dc3545;">Behance</a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <form method="post" class="contact-form p-4 rounded" style="background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px);">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="{{ form.name.id_for_label }}" class="form-label fw-light">{{ form.name.label }}</label>
+                        {{ form.name }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.email.id_for_label }}" class="form-label fw-light">{{ form.email.label }}</label>
+                        {{ form.email }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.project_type.id_for_label }}" class="form-label fw-light">{{ form.project_type.label }}</label>
+                        {{ form.project_type }}
+                    </div>
+                    <div class="mb-3">
+                        <label for="{{ form.message.id_for_label }}" class="form-label fw-light">{{ form.message.label }}</label>
+                        {{ form.message }}
+                    </div>
+                    <button type="submit" class="btn btn-light fw-light text-uppercase w-100 font-modern">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

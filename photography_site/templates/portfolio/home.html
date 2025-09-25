@@ -1,0 +1,485 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block body_class %}hero-page{% endblock %}
+
+{% block title %}Daniel Ahlberg - Professional Photographer in Stockholm, Sweden{% endblock %}
+{% block description %}Award-winning photographer in Stockholm specializing in portrait, landscape, and event photography. Book your session with 10+ years of experience capturing authentic moments.{% endblock %}
+{% block keywords %}Stockholm photographer, Swedish photographer, portrait photography Stockholm, event photographer Sweden, professional photography, Daniel Ahlberg{% endblock %}
+
+{% block og_type %}website{% endblock %}
+{% block twitter_card %}summary_large_image{% endblock %}
+
+{% block structured_data %}
+{
+    "@context": "https://schema.org",
+    "@type": ["ProfessionalService", "LocalBusiness"],
+    "name": "Daniel Ahlberg Photography",
+    "image": [
+        "{{ request.scheme }}://{{ request.get_host }}{% static 'images/daniel-ahlberg.jpg' %}",
+        "{{ request.scheme }}://{{ request.get_host }}{% static 'images/portfolio-sample-1.jpg' %}",
+        "{{ request.scheme }}://{{ request.get_host }}{% static 'images/portfolio-sample-2.jpg' %}"
+    ],
+    "description": "Professional photographer in Stockholm, Sweden with over 10 years of experience in portrait, landscape, and event photography.",
+    "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Stockholm",
+        "addressRegion": "Stockholm County",
+        "addressCountry": "Sweden"
+    },
+    "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 59.3293,
+        "longitude": 18.0686
+    },
+    "url": "{{ request.build_absolute_uri }}",
+    "telephone": "+46123456789",
+    "email": "hello@danielahlberg.me",
+    "priceRange": "$$",
+    "openingHours": "Mo-Fr 09:00-18:00",
+    "serviceType": ["Portrait Photography", "Event Photography", "Landscape Photography", "Wedding Photography", "Commercial Photography"],
+    "areaServed": [
+        {
+            "@type": "City",
+            "name": "Stockholm"
+        },
+        {
+            "@type": "Country",
+            "name": "Sweden"
+        }
+    ],
+    "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Photography Services",
+        "itemListElement": [
+            {
+                "@type": "Offer",
+                "itemOffered": {
+                    "@type": "Service",
+                    "name": "Portrait Photography Session",
+                    "description": "Professional portrait photography sessions for individuals and families"
+                }
+            },
+            {
+                "@type": "Offer",
+                "itemOffered": {
+                    "@type": "Service",
+                    "name": "Event Photography",
+                    "description": "Complete event coverage including weddings, corporate events, and celebrations"
+                }
+            }
+        ]
+    },
+    "founder": {
+        "@type": "Person",
+        "name": "Daniel Ahlberg",
+        "jobTitle": "Professional Photographer",
+        "image": "{{ request.scheme }}://{{ request.get_host }}{% static 'images/daniel-ahlberg.jpg' %}",
+        "worksFor": {
+            "@type": "Organization",
+            "name": "Daniel Ahlberg Photography"
+        },
+        "sameAs": [
+            "https://instagram.com/danielahlberg",
+            "https://linkedin.com/in/danielahlberg"
+        ]
+    },
+    "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "127"
+    }
+}
+{% endblock %}
+
+{% block content %}
+<section id="home" class="hero-section vh-100 position-relative">
+    <!-- Dark overlay -->
+    <div class="hero-overlay position-absolute top-0 start-0 w-100 h-100"></div>
+
+    <!-- Hero content -->
+    <div class="hero-content position-relative z-2">
+        <div class="hero-text-container">
+            <h1 class="fade-text display-1 mb-3">Daniel Ahlberg</h1>
+        </div>
+        <div class="hero-subtitle-container">
+            <p class="hero-subtitle text-white text-uppercase fs-4 fw-light letter-spacing-wide">Stockholm Photographer</p>
+        </div>
+    </div>
+</section>
+
+<!-- Advanced Portfolio Gallery Section -->
+<section class="advanced-portfolio-section" style="padding: 120px 0; background: #fafafa;">
+    <div class="portfolio-container">
+        <!-- Portfolio Header -->
+        <div class="portfolio-header">
+            <h2 class="portfolio-main-title">Featured Work</h2>
+        </div>
+        <div class="advanced-portfolio-grid" id="home-gallery">
+            <div class="grid-item grid-large-landscape parallax-slow" data-delay="0">
+                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=90"
+                     alt="Mountain Vista" class="grid-image" data-title="Mountain Vista" data-description="Natural beauty captured" loading="lazy">
+                <div class="image-overlay">
+                    <div class="overlay-content">
+                        <h3>Mountain Vista</h3>
+                        <p>Landscape Photography</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-item grid-portrait" data-delay="200">
+                <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=90"
+                     alt="Fashion Portrait" class="grid-image" data-title="Fashion Portrait" data-description="Studio elegance" loading="lazy">
+                <div class="image-overlay">
+                    <div class="overlay-content">
+                        <h3>Fashion Portrait</h3>
+                        <p>Studio Photography</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-item grid-square parallax-medium" data-delay="100">
+                <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=90"
+                     alt="Urban Life" class="grid-image" data-title="Urban Life" data-description="City moments" loading="lazy">
+                <div class="image-overlay">
+                    <div class="overlay-content">
+                        <h3>Urban Life</h3>
+                        <p>Street Photography</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-item grid-medium-landscape" data-delay="300">
+                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=90"
+                     alt="Wedding Ceremony" class="grid-image" data-title="Wedding Moment" data-description="Love stories" loading="lazy">
+                <div class="image-overlay">
+                    <div class="overlay-content">
+                        <h3>Wedding Moment</h3>
+                        <p>Event Photography</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-item grid-small-square" data-delay="150">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=90"
+                     alt="Professional Portrait" class="grid-image" data-title="Professional Portrait" data-description="Corporate style" loading="lazy">
+                <div class="image-overlay">
+                    <div class="overlay-content">
+                        <h3>Professional</h3>
+                        <p>Headshots</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-item grid-wide-landscape parallax-slow" data-delay="250">
+                <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=90"
+                     alt="Lake Reflection" class="grid-image" data-title="Lakeside Serenity" data-description="Peaceful waters" loading="lazy">
+                <div class="image-overlay">
+                    <div class="overlay-content">
+                        <h3>Lake Serenity</h3>
+                        <p>Nature Photography</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-item grid-portrait-tall parallax-medium" data-delay="400">
+                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=90"
+                     alt="Natural Portrait" class="grid-image" data-title="Natural Portrait" data-description="Authentic expression" loading="lazy">
+                <div class="image-overlay">
+                    <div class="overlay-content">
+                        <h3>Natural Portrait</h3>
+                        <p>Outdoor Session</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-item grid-medium-square" data-delay="350">
+                <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=90"
+                     alt="Golden Hour" class="grid-image" data-title="Golden Hour" data-description="Magic light" loading="lazy">
+                <div class="image-overlay">
+                    <div class="overlay-content">
+                        <h3>Golden Hour</h3>
+                        <p>Sunset Photography</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-item grid-small-portrait" data-delay="500">
+                <img src="https://images.unsplash.com/photo-1493863641943-9b68992a8d07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=90"
+                     alt="Modern Lines" class="grid-image" data-title="Modern Lines" data-description="Architectural beauty" loading="lazy">
+                <div class="image-overlay">
+                    <div class="overlay-content">
+                        <h3>Architecture</h3>
+                        <p>Urban Details</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-item grid-large-square" data-delay="200">
+                <img src="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=90"
+                     alt="Portrait Session" class="grid-image" data-title="Portrait Session" data-description="Capturing authentic moments" loading="lazy">
+                <div class="image-overlay">
+                    <div class="overlay-content">
+                        <h3>Portrait Session</h3>
+                        <p>Authentic Moments</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-item grid-medium-portrait parallax-fast" data-delay="300">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=90"
+                     alt="Lifestyle Portrait" class="grid-image" data-title="Lifestyle Moment" data-description="Natural living" loading="lazy">
+                <div class="image-overlay">
+                    <div class="overlay-content">
+                        <h3>Lifestyle</h3>
+                        <p>Natural Living</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-item grid-ultra-wide" data-delay="100">
+                <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=90"
+                     alt="Forest Path" class="grid-image" data-title="Forest Path" data-description="Nature's corridor" loading="lazy">
+                <div class="image-overlay">
+                    <div class="overlay-content">
+                        <h3>Forest Path</h3>
+                        <p>Nature's Corridor</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-5">
+            <a href="{% url 'portfolio:portfolio' %}" class="btn btn-dark fw-light text-uppercase px-4 py-2 font-modern">View Full Portfolio</a>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 col-md-7">
+                <h2 class="display-5 fw-light text-uppercase letter-spacing-wide mb-4 font-heading-secondary">About Daniel</h2>
+                <p class="lead fw-light lh-lg mb-4 font-serif">Born and raised in Stockholm, Sweden, I'm a 32-year-old photographer passionate about capturing the authentic moments that make life extraordinary. With over a decade of experience, I specialize in portrait, landscape, and event photography.</p>
+                <div class="text-start">
+                    <a href="{% url 'portfolio:about' %}" class="btn btn-outline-dark fw-light text-uppercase px-4 py-2 font-modern me-3">Learn More</a>
+                    <a href="{% url 'portfolio:contact' %}" class="btn btn-dark fw-light text-uppercase px-4 py-2 font-modern">Book a Session</a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-5 text-center">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
+                     alt="Daniel Ahlberg - Stockholm Photographer"
+                     class="img-fluid rounded shadow">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Advanced Lightbox -->
+<div class="advanced-lightbox" id="home-advanced-lightbox">
+    <div class="lightbox-close">&times;</div>
+    <div class="lightbox-content">
+        <img class="lightbox-image" src="" alt="">
+        <div class="lightbox-info">
+            <div class="lightbox-title"></div>
+            <div class="lightbox-description"></div>
+        </div>
+        <div class="lightbox-nav">
+            <button class="nav-btn prev-btn">‹</button>
+            <button class="nav-btn next-btn">›</button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Advanced Home Portfolio Gallery with Scroll Animations and Parallax
+
+    // Intersection Observer for scroll-triggered animations
+    const observerOptions = {
+        root: null,
+        rootMargin: '-10% 0px -10% 0px',
+        threshold: 0.1
+    };
+
+    const homePortfolioObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const item = entry.target;
+                const delay = item.getAttribute('data-delay') || 0;
+
+                setTimeout(() => {
+                    item.classList.remove('scroll-animate');
+                    item.classList.add('animate-in');
+                }, delay);
+            }
+        });
+    }, observerOptions);
+
+    // Parallax scroll effects for selected images
+    const homeParallaxObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const item = entry.target;
+                const speed = item.classList.contains('parallax-slow') ? 0.5 :
+                            item.classList.contains('parallax-medium') ? 0.3 : 0.7;
+
+                const scrolled = window.pageYOffset;
+                const rect = item.getBoundingClientRect();
+                const elementTop = rect.top + scrolled;
+
+                function updateHomeParallax() {
+                    const currentScroll = window.pageYOffset;
+                    const yPos = Math.max(0, (currentScroll - elementTop) * speed);
+
+                    // Only apply parallax if item is not currently animating in
+                    if (!item.classList.contains('scroll-animate')) {
+                        const currentTransform = item.style.transform || '';
+                        const scaleMatch = currentTransform.match(/scale\([^)]+\)/);
+                        const scaleTransform = scaleMatch ? scaleMatch[0] : 'scale(1)';
+                        item.style.transform = `translateY(${yPos}px) ${scaleTransform}`;
+                    }
+                }
+
+                window.addEventListener('scroll', updateHomeParallax);
+                updateHomeParallax();
+            }
+        });
+    }, {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0
+    });
+
+    // Initialize portfolio items
+    const homePortfolioItems = document.querySelectorAll('#home-gallery .grid-item');
+    let homeVisibleItems = Array.from(homePortfolioItems);
+
+    // Add scroll-animate class initially for animation effect
+    homePortfolioItems.forEach(item => {
+        item.classList.add('scroll-animate');
+        homePortfolioObserver.observe(item);
+
+        // Initialize parallax for items with parallax classes
+        if (item.classList.contains('parallax-slow') ||
+            item.classList.contains('parallax-medium') ||
+            item.classList.contains('parallax-fast')) {
+            homeParallaxObserver.observe(item);
+        }
+    });
+
+    // Advanced Home Lightbox functionality
+    let homeCurrentIndex = 0;
+    const homeLightbox = document.getElementById('home-advanced-lightbox');
+    const homeLightboxImage = homeLightbox.querySelector('.lightbox-image');
+    const homeLightboxTitle = homeLightbox.querySelector('.lightbox-title');
+    const homeLightboxDescription = homeLightbox.querySelector('.lightbox-description');
+    const homeCloseBtn = homeLightbox.querySelector('.lightbox-close');
+    const homePrevBtn = homeLightbox.querySelector('.prev-btn');
+    const homeNextBtn = homeLightbox.querySelector('.next-btn');
+
+    function openHomeLightbox(index) {
+        homeCurrentIndex = index;
+        updateHomeLightboxContent();
+        homeLightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeHomeLightbox() {
+        homeLightbox.classList.remove('active');
+        document.body.style.overflow = 'auto';
+    }
+
+    function updateHomeLightboxContent() {
+        const currentItem = homeVisibleItems[homeCurrentIndex];
+        const img = currentItem.querySelector('.grid-image');
+        const title = img.getAttribute('data-title');
+        const description = img.getAttribute('data-description');
+
+        // Get high resolution version
+        const highResSrc = img.src.replace('w=800', 'w=1600').replace('w=600', 'w=1600').replace('w=700', 'w=1600');
+
+        homeLightboxImage.src = highResSrc;
+        homeLightboxImage.alt = title;
+        homeLightboxTitle.textContent = title;
+        homeLightboxDescription.textContent = description;
+
+        // Update navigation
+        homePrevBtn.disabled = homeCurrentIndex === 0;
+        homeNextBtn.disabled = homeCurrentIndex === homeVisibleItems.length - 1;
+
+        // Preload adjacent images
+        preloadHomeImages();
+    }
+
+    function preloadHomeImages() {
+        // Preload next image
+        if (homeCurrentIndex < homeVisibleItems.length - 1) {
+            const nextImg = homeVisibleItems[homeCurrentIndex + 1].querySelector('.grid-image');
+            const nextHighRes = nextImg.src.replace('w=800', 'w=1600').replace('w=600', 'w=1600').replace('w=700', 'w=1600');
+            const preloadNext = new Image();
+            preloadNext.src = nextHighRes;
+        }
+
+        // Preload previous image
+        if (homeCurrentIndex > 0) {
+            const prevImg = homeVisibleItems[homeCurrentIndex - 1].querySelector('.grid-image');
+            const prevHighRes = prevImg.src.replace('w=800', 'w=1600').replace('w=600', 'w=1600').replace('w=700', 'w=1600');
+            const preloadPrev = new Image();
+            preloadPrev.src = prevHighRes;
+        }
+    }
+
+    function nextHomeImage() {
+        if (homeCurrentIndex < homeVisibleItems.length - 1) {
+            homeCurrentIndex++;
+            updateHomeLightboxContent();
+        }
+    }
+
+    function prevHomeImage() {
+        if (homeCurrentIndex > 0) {
+            homeCurrentIndex--;
+            updateHomeLightboxContent();
+        }
+    }
+
+    // Event listeners
+    homePortfolioItems.forEach((item, index) => {
+        item.addEventListener('click', function() {
+            const visibleIndex = homeVisibleItems.indexOf(item);
+            if (visibleIndex !== -1) {
+                openHomeLightbox(visibleIndex);
+            }
+        });
+    });
+
+    homeCloseBtn.addEventListener('click', closeHomeLightbox);
+    homeLightbox.addEventListener('click', function(e) {
+        if (e.target === homeLightbox) closeHomeLightbox();
+    });
+
+    homeNextBtn.addEventListener('click', nextHomeImage);
+    homePrevBtn.addEventListener('click', prevHomeImage);
+
+    // Keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (homeLightbox.classList.contains('active')) {
+            switch(e.key) {
+                case 'Escape':
+                    closeHomeLightbox();
+                    break;
+                case 'ArrowLeft':
+                    prevHomeImage();
+                    break;
+                case 'ArrowRight':
+                    nextHomeImage();
+                    break;
+            }
+        }
+    });
+});
+</script>
+{% endblock %}
