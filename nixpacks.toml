@@ -1,5 +1,7 @@
-[providers]
-python = "3.11"
+providers = ["python"]
+
+[providers.python]
+version = "3.11"
 
 [phases.build]
 cmds = [
