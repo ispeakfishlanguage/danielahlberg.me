@@ -23,9 +23,26 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
 
 # Add Railway and Render to allowed hosts in production
 if 'RAILWAY_ENVIRONMENT' in os.environ:
-    ALLOWED_HOSTS.extend([os.environ.get('RAILWAY_PUBLIC_DOMAIN', ''), os.environ.get('RAILWAY_PRIVATE_DOMAIN', '')])
+    # Railway provides RAILWAY_PUBLIC_DOMAIN
+    ALLOWED_HOSTS.append(os.environ.get('RAILWAY_PUBLIC_DOMAIN', ''))
+    # Also add the standard Railway app domain pattern
+    ALLOWED_HOSTS.extend([
+        '.up.railway.app',
+        '.railway.app',
+        '*'  # Temporarily allow all hosts for Railway - remove after finding exact domain
+    ])
 if 'RENDER' in os.environ:
     ALLOWED_HOSTS.append(os.environ.get('RENDER_EXTERNAL_HOSTNAME'))
+
+# CSRF Trusted Origins for Railway
+CSRF_TRUSTED_ORIGINS = []
+if 'RAILWAY_ENVIRONMENT' in os.environ:
+    CSRF_TRUSTED_ORIGINS.extend([
+        'https://*.up.railway.app',
+        'https://*.railway.app',
+    ])
+    if os.environ.get('RAILWAY_PUBLIC_DOMAIN'):
+        CSRF_TRUSTED_ORIGINS.append(f"https://{os.environ.get('RAILWAY_PUBLIC_DOMAIN')}")
 
 # Application definition
 INSTALLED_APPS = [
