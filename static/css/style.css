@@ -1117,44 +1117,38 @@ body:not(.hero-page) .navbar-toggler-bar {
         margin: 0 !important;
     }
 
-    /* About section mobile - show text before image and center */
-    section .row.align-items-center {
-        flex-direction: column;
+    /* About section mobile - heading, image, text, buttons */
+    .about-heading {
+        text-align: center !important;
+        margin-bottom: 20px;
     }
 
-    section .row.align-items-center .col-lg-8,
-    section .row.align-items-center .col-md-7 {
+    .about-heading h2 {
+        margin-bottom: 0 !important;
+    }
+
+    .about-image {
+        margin-bottom: 30px;
+    }
+
+    .about-text {
         text-align: center !important;
     }
 
-    section .row.align-items-center h2 {
+    .about-text p {
         text-align: center !important;
     }
 
-    section .row.align-items-center p {
-        text-align: center !important;
-    }
-
-    section .row.align-items-center .text-start {
+    .about-text .text-start {
         text-align: center !important;
         display: flex;
         flex-direction: column;
         gap: 12px;
     }
 
-    section .row.align-items-center .text-start .btn {
+    .about-text .text-start .btn {
         width: 100%;
         margin: 0 !important;
-    }
-
-    section .row.align-items-center .col-lg-8,
-    section .row.align-items-center .col-md-7 {
-        margin-bottom: 30px;
-    }
-
-    section .row.align-items-center .col-lg-4,
-    section .row.align-items-center .col-md-5 {
-        margin-bottom: 0;
     }
 }
 
