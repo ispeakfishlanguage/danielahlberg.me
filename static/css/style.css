@@ -1117,9 +1117,9 @@ body:not(.hero-page) .navbar-toggler-bar {
         margin: 0 !important;
     }
 
-    /* About section mobile - reverse order and center text */
+    /* About section mobile - show text before image and center */
     section .row.align-items-center {
-        flex-direction: column-reverse;
+        flex-direction: column;
     }
 
     section .row.align-items-center .col-lg-8,
@@ -1147,9 +1147,14 @@ body:not(.hero-page) .navbar-toggler-bar {
         margin: 0 !important;
     }
 
+    section .row.align-items-center .col-lg-8,
+    section .row.align-items-center .col-md-7 {
+        margin-bottom: 30px;
+    }
+
     section .row.align-items-center .col-lg-4,
     section .row.align-items-center .col-md-5 {
-        margin-bottom: 30px;
+        margin-bottom: 0;
     }
 }
 
