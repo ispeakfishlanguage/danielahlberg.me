@@ -55,7 +55,7 @@
         <!-- Advanced Portfolio Grid -->
         <div class="advanced-portfolio-grid" id="portfolio-grid">
 
-            <div class="grid-item grid-large-landscape parallax-slow" data-category="landscape" data-delay="0">
+            <div class="grid-item grid-large-landscape" data-category="landscape" data-delay="0">
                 <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=90"
                      alt="Mountain Vista" class="grid-image" data-title="Mountain Vista" data-description="Sunrise over the peaks" loading="lazy">
                 <div class="image-overlay">
@@ -77,7 +77,7 @@
                 </div>
             </div>
 
-            <div class="grid-item grid-square parallax-medium" data-category="projects" data-delay="100">
+            <div class="grid-item grid-square" data-category="projects" data-delay="100">
                 <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=90"
                      alt="Urban Life" class="grid-image" data-title="Urban Project" data-description="Creative urban photography project" loading="lazy">
                 <div class="image-overlay">
@@ -110,7 +110,7 @@
                 </div>
             </div>
 
-            <div class="grid-item grid-wide-landscape parallax-slow" data-category="landscape" data-delay="250">
+            <div class="grid-item grid-wide-landscape" data-category="landscape" data-delay="250">
                 <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=90"
                      alt="Lake Reflection" class="grid-image" data-title="Lake Reflection" data-description="Perfect mirror reflection" loading="lazy">
                 <div class="image-overlay">
@@ -122,7 +122,7 @@
             </div>
 
             <!-- Row 4 -->
-            <div class="grid-item grid-portrait-tall parallax-medium" data-category="portraits" data-delay="400">
+            <div class="grid-item grid-portrait-tall" data-category="portraits" data-delay="400">
                 <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=90"
                      alt="Natural Portrait" class="grid-image" data-title="Natural Portrait" data-description="Outdoor portrait session" loading="lazy">
                 <div class="image-overlay">
@@ -167,7 +167,7 @@
                 </div>
             </div>
 
-            <div class="grid-item grid-medium-portrait parallax-fast" data-category="portraits" data-delay="300">
+            <div class="grid-item grid-medium-portrait" data-category="portraits" data-delay="300">
                 <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=90"
                      alt="Lifestyle Portrait" class="grid-image" data-title="Lifestyle Portrait" data-description="Candid lifestyle moment" loading="lazy">
                 <div class="image-overlay">
@@ -202,7 +202,7 @@
                 </div>
             </div>
 
-            <div class="grid-item grid-square-large parallax-medium" data-category="projects" data-delay="150">
+            <div class="grid-item grid-square-large" data-category="projects" data-delay="150">
                 <img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=90"
                      alt="Urban Documentary" class="grid-image" data-title="Urban Documentary" data-description="Documentary photography project" loading="lazy">
                 <div class="image-overlay">
@@ -271,40 +271,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }, observerOptions);
 
-    // Parallax scroll effects for selected images
-    const parallaxObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const item = entry.target;
-                const speed = item.classList.contains('parallax-slow') ? 0.5 :
-                            item.classList.contains('parallax-medium') ? 0.3 : 0.7;
-
-                const scrolled = window.pageYOffset;
-                const rect = item.getBoundingClientRect();
-                const elementTop = rect.top + scrolled;
-
-                function updateParallax() {
-                    const currentScroll = window.pageYOffset;
-                    const yPos = Math.max(0, (currentScroll - elementTop) * speed);
-
-                    // Only apply parallax if item is not currently animating in
-                    if (!item.classList.contains('scroll-animate')) {
-                        const currentTransform = item.style.transform || '';
-                        const scaleMatch = currentTransform.match(/scale\([^)]+\)/);
-                        const scaleTransform = scaleMatch ? scaleMatch[0] : 'scale(1)';
-                        item.style.transform = `translateY(${yPos}px) ${scaleTransform}`;
-                    }
-                }
-
-                window.addEventListener('scroll', updateParallax);
-                updateParallax();
-            }
-        });
-    }, {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0
-    });
+    // Parallax effects removed to prevent images from moving during scroll
 
     // Initialize portfolio items
     const portfolioItems = document.querySelectorAll('.grid-item');
@@ -315,12 +282,7 @@ document.addEventListener('DOMContentLoaded', function() {
         item.classList.add('scroll-animate');
         portfolioObserver.observe(item);
 
-        // Initialize parallax for items with parallax classes
-        if (item.classList.contains('parallax-slow') ||
-            item.classList.contains('parallax-medium') ||
-            item.classList.contains('parallax-fast')) {
-            parallaxObserver.observe(item);
-        }
+        // Parallax initialization removed
     });
 
     // Advanced filtering with smooth animations
