@@ -150,8 +150,8 @@ h1.fade-text.display-1 {
     font-family: 'Oswald', sans-serif !important;
     font-weight: bold !important;
     text-transform: uppercase !important;
-    letter-spacing: 0.1em !important;
-    font-size: clamp(4rem, 11vw, 12rem) !important;
+    letter-spacing: 0.08em !important;
+    font-size: clamp(4rem, 10vw, 11rem) !important;
     line-height: 1.1 !important;
     background: linear-gradient(to bottom, rgba(255,255,255,1) 50%, rgba(255,255,255,0.1) 85%, rgba(255,255,255,0) 90%) !important;
     -webkit-background-clip: text !important;
@@ -160,7 +160,7 @@ h1.fade-text.display-1 {
     color: transparent !important;
     width: 100% !important;
     margin: 0 !important;
-    padding: 0 20px;
+    padding: 0 30px;
     white-space: nowrap !important;
     box-sizing: border-box;
     overflow: visible !important;
