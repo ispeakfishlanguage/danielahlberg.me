@@ -1116,6 +1116,41 @@ body:not(.hero-page) .navbar-toggler-bar {
         padding: 14px 24px;
         margin: 0 !important;
     }
+
+    /* About section mobile - reverse order and center text */
+    section .row.align-items-center {
+        flex-direction: column-reverse;
+    }
+
+    section .row.align-items-center .col-lg-8,
+    section .row.align-items-center .col-md-7 {
+        text-align: center !important;
+    }
+
+    section .row.align-items-center h2 {
+        text-align: center !important;
+    }
+
+    section .row.align-items-center p {
+        text-align: center !important;
+    }
+
+    section .row.align-items-center .text-start {
+        text-align: center !important;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    section .row.align-items-center .text-start .btn {
+        width: 100%;
+        margin: 0 !important;
+    }
+
+    section .row.align-items-center .col-lg-4,
+    section .row.align-items-center .col-md-5 {
+        margin-bottom: 30px;
+    }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
