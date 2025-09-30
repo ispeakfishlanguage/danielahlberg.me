@@ -136,12 +136,13 @@ STATICFILES_DIRS = [
 
 # WhiteNoise configuration for serving static files in production
 if 'RAILWAY_ENVIRONMENT' in os.environ:
-    # Use non-manifest storage for Railway to avoid 500 errors
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+    # Use CompressedManifestStaticFilesStorage for better cache busting
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 else:
     STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 WHITENOISE_ALLOW_ALL_ORIGINS = True
+WHITENOISE_MAX_AGE = 0  # Disable caching during deployment
 
 # Media files
 MEDIA_URL = '/media/'
