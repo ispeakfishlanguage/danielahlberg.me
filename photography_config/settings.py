@@ -21,7 +21,7 @@ SECRET_KEY = env('SECRET_KEY', default=secrets.token_urlsafe(50) if 'RAILWAY_ENV
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG', default=False if 'RAILWAY_ENVIRONMENT' in os.environ else True)
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1', '0.0.0.0'])
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1', '0.0.0.0', 'www.instalacionesvml.com', 'instalacionesvml.com'])
 
 # Add Railway and Render to allowed hosts in production
 if 'RAILWAY_ENVIRONMENT' in os.environ:
@@ -37,7 +37,10 @@ if 'RENDER' in os.environ:
     ALLOWED_HOSTS.append(os.environ.get('RENDER_EXTERNAL_HOSTNAME'))
 
 # CSRF Trusted Origins for Railway
-CSRF_TRUSTED_ORIGINS = []
+CSRF_TRUSTED_ORIGINS = [
+    'https://www.instalacionesvml.com',
+    'https://instalacionesvml.com',
+]
 if 'RAILWAY_ENVIRONMENT' in os.environ:
     CSRF_TRUSTED_ORIGINS.extend([
         'https://*.up.railway.app',
