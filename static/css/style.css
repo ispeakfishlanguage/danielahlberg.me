@@ -1117,7 +1117,10 @@ body:not(.hero-page) .navbar-toggler-bar {
         margin: 0 !important;
     }
 
-    /* Home page About section mobile - heading, image, text, buttons */
+}
+
+/* Home page About section mobile - matches Bootstrap lg breakpoint */
+@media (max-width: 991px) {
     .home-about-section .about-text {
         display: none !important;
     }
