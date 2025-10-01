@@ -1074,8 +1074,9 @@ body:not(.hero-page) .navbar-toggler-bar {
         max-width: 100%;
         width: 100%;
         overflow: visible !important;
-        word-spacing: 9999px;
-        text-align: center;
+        word-spacing: normal !important;
+        text-align: justify !important;
+        text-align-last: justify !important;
         background: none !important;
         -webkit-background-clip: unset !important;
         -webkit-text-fill-color: unset !important;
@@ -1084,6 +1085,13 @@ body:not(.hero-page) .navbar-toggler-bar {
         margin-bottom: 0 !important;
         padding: 0 5px;
         box-sizing: border-box;
+        display: block !important;
+    }
+
+    h1.fade-text.display-1::after {
+        content: "";
+        display: inline-block;
+        width: 100%;
     }
 
     .hero-subtitle {
