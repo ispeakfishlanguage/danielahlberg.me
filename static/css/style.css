@@ -1118,9 +1118,15 @@ body:not(.hero-page) .navbar-toggler-bar {
     }
 
     /* Home page About section mobile - heading, image, text, buttons */
+    .home-about-section .about-text {
+        display: none !important;
+    }
+
     .home-about-section .about-heading-mobile {
+        display: block !important;
         text-align: center !important;
         margin-bottom: 20px;
+        order: 1;
     }
 
     .home-about-section .about-heading-mobile h2 {
@@ -1129,10 +1135,13 @@ body:not(.hero-page) .navbar-toggler-bar {
 
     .home-about-section .about-image {
         margin-bottom: 30px;
+        order: 2;
     }
 
     .home-about-section .about-text-mobile {
+        display: block !important;
         text-align: center !important;
+        order: 3;
     }
 
     .home-about-section .about-text-mobile p {
@@ -1149,6 +1158,11 @@ body:not(.hero-page) .navbar-toggler-bar {
     .home-about-section .about-text-mobile .text-start .btn {
         width: 100%;
         margin: 0 !important;
+    }
+
+    .home-about-section .row {
+        display: flex;
+        flex-direction: column;
     }
 }
 
