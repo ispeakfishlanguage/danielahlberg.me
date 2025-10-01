@@ -1071,8 +1071,7 @@ body:not(.hero-page) .navbar-toggler-bar {
         white-space: normal !important;
         line-height: 1.2 !important;
         letter-spacing: 0.05em !important;
-        max-width: 90%;
-        width: 90%;
+        max-width: fit-content;
         margin: 0 auto !important;
         overflow: visible !important;
         word-spacing: normal !important;
@@ -1082,11 +1081,12 @@ body:not(.hero-page) .navbar-toggler-bar {
         -webkit-text-fill-color: unset !important;
         background-clip: unset !important;
         color: #ffffff !important;
-        padding: 0;
+        padding: 0 15px;
         box-sizing: border-box;
         display: flex !important;
-        justify-content: space-between !important;
+        justify-content: center !important;
         align-items: flex-start !important;
+        gap: clamp(0.5rem, 3vw, 1.5rem);
     }
 
     h1.fade-text.display-1 .hero-name-first {
