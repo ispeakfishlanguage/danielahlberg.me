@@ -1121,7 +1121,6 @@ body:not(.hero-page) .navbar-toggler-bar {
     .home-about-section .about-heading {
         text-align: center !important;
         margin-bottom: 20px;
-        order: 1;
     }
 
     .home-about-section .about-heading h2 {
@@ -1130,12 +1129,10 @@ body:not(.hero-page) .navbar-toggler-bar {
 
     .home-about-section .about-image {
         margin-bottom: 30px;
-        order: 2;
     }
 
     .home-about-section .about-text {
         text-align: center !important;
-        order: 3;
     }
 
     .home-about-section .about-text p {
