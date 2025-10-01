@@ -21,7 +21,7 @@ SECRET_KEY = env('SECRET_KEY', default=secrets.token_urlsafe(50) if 'RAILWAY_ENV
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG', default=False if 'RAILWAY_ENVIRONMENT' in os.environ else True)
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1'])
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1', '0.0.0.0'])
 
 # Add Railway and Render to allowed hosts in production
 if 'RAILWAY_ENVIRONMENT' in os.environ:
