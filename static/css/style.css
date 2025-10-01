@@ -1118,35 +1118,35 @@ body:not(.hero-page) .navbar-toggler-bar {
     }
 
     /* Home page About section mobile - heading, image, text, buttons */
-    .home-about-section .about-heading {
+    .home-about-section .about-text {
         text-align: center !important;
         margin-bottom: 20px;
     }
 
-    .home-about-section .about-heading h2 {
-        margin-bottom: 0 !important;
+    .home-about-section .about-text h2 {
+        margin-bottom: 20px !important;
     }
 
     .home-about-section .about-image {
         margin-bottom: 30px;
     }
 
-    .home-about-section .about-text {
+    .home-about-section .about-text-mobile {
         text-align: center !important;
     }
 
-    .home-about-section .about-text p {
+    .home-about-section .about-text-mobile p {
         text-align: center !important;
     }
 
-    .home-about-section .about-text .text-start {
+    .home-about-section .about-text-mobile .text-start {
         text-align: center !important;
         display: flex;
         flex-direction: column;
         gap: 12px;
     }
 
-    .home-about-section .about-text .text-start .btn {
+    .home-about-section .about-text-mobile .text-start .btn {
         width: 100%;
         margin: 0 !important;
     }
