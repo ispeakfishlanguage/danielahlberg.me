@@ -1118,13 +1118,13 @@ body:not(.hero-page) .navbar-toggler-bar {
     }
 
     /* Home page About section mobile - heading, image, text, buttons */
-    .home-about-section .about-text {
+    .home-about-section .about-heading-mobile {
         text-align: center !important;
         margin-bottom: 20px;
     }
 
-    .home-about-section .about-text h2 {
-        margin-bottom: 20px !important;
+    .home-about-section .about-heading-mobile h2 {
+        margin-bottom: 0 !important;
     }
 
     .home-about-section .about-image {
