@@ -1070,7 +1070,7 @@ body:not(.hero-page) .navbar-toggler-bar {
         font-size: clamp(1.8rem, 8vw, 3rem) !important;
         white-space: normal !important;
         line-height: 1.2 !important;
-        letter-spacing: 0.15em !important;
+        letter-spacing: 0.35em !important;
         max-width: 100%;
         width: 100%;
         overflow: visible !important;
@@ -1082,7 +1082,7 @@ body:not(.hero-page) .navbar-toggler-bar {
         background-clip: unset !important;
         color: #ffffff !important;
         margin-bottom: 0 !important;
-        padding: 0 10px;
+        padding: 0 5px;
         box-sizing: border-box;
     }
 
