@@ -1118,35 +1118,38 @@ body:not(.hero-page) .navbar-toggler-bar {
     }
 
     /* About section mobile - heading, image, text, buttons */
-    .about-heading {
+    section.py-5 .about-heading {
         text-align: center !important;
         margin-bottom: 20px;
+        order: 1;
     }
 
-    .about-heading h2 {
+    section.py-5 .about-heading h2 {
         margin-bottom: 0 !important;
     }
 
-    .about-image {
+    section.py-5 .about-image {
         margin-bottom: 30px;
+        order: 2;
     }
 
-    .about-text {
+    section.py-5 .about-text {
+        text-align: center !important;
+        order: 3;
+    }
+
+    section.py-5 .about-text p {
         text-align: center !important;
     }
 
-    .about-text p {
-        text-align: center !important;
-    }
-
-    .about-text .text-start {
+    section.py-5 .about-text .text-start {
         text-align: center !important;
         display: flex;
         flex-direction: column;
         gap: 12px;
     }
 
-    .about-text .text-start .btn {
+    section.py-5 .about-text .text-start .btn {
         width: 100%;
         margin: 0 !important;
     }
