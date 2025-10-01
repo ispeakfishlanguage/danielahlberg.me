@@ -1070,28 +1070,31 @@ body:not(.hero-page) .navbar-toggler-bar {
         font-size: clamp(1.8rem, 8vw, 3rem) !important;
         white-space: normal !important;
         line-height: 1.2 !important;
-        letter-spacing: 0.35em !important;
+        letter-spacing: 0.05em !important;
         max-width: 100%;
         width: 100%;
         overflow: visible !important;
         word-spacing: normal !important;
-        text-align: justify !important;
-        text-align-last: justify !important;
+        text-align: center !important;
         background: none !important;
         -webkit-background-clip: unset !important;
         -webkit-text-fill-color: unset !important;
         background-clip: unset !important;
         color: #ffffff !important;
         margin-bottom: 0 !important;
-        padding: 0 5px;
+        padding: 0 10px;
         box-sizing: border-box;
-        display: block !important;
+        display: flex !important;
+        justify-content: space-between !important;
+        align-items: flex-start !important;
     }
 
-    h1.fade-text.display-1::after {
-        content: "";
-        display: inline-block;
-        width: 100%;
+    h1.fade-text.display-1 .hero-name-first {
+        flex: 0 0 auto;
+    }
+
+    h1.fade-text.display-1 .hero-name-last {
+        flex: 0 0 auto;
     }
 
     .hero-subtitle {
