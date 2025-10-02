@@ -102,27 +102,10 @@
 
             <div class="collapse navbar-collapse" id="navigation">
                 <ul class="navbar-nav ms-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle {% if request.resolver_match.url_name == 'portfolio' %}active{% endif %}" id="portfolioDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'portfolio' %}active{% endif %}" href="{% url 'portfolio:portfolio' %}">
                             <p>Portfolio</p>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="portfolioDropdown">
-                            <a class="dropdown-item" href="{% url 'portfolio:portfolio' %}">
-                                All
-                            </a>
-                            <a class="dropdown-item" href="{% url 'portfolio:portfolio' %}?category=portraits">
-                                Portraits
-                            </a>
-                            <a class="dropdown-item" href="{% url 'portfolio:portfolio' %}?category=landscape">
-                                Landscapes
-                            </a>
-                            <a class="dropdown-item" href="{% url 'portfolio:portfolio' %}?category=events">
-                                Events
-                            </a>
-                            <a class="dropdown-item" href="{% url 'portfolio:portfolio' %}?category=projects">
-                                Projects
-                            </a>
-                        </div>
                     </li>
 
                     <li class="nav-item">
