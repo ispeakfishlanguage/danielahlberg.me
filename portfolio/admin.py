@@ -3,6 +3,22 @@ from django.utils.html import format_html
 from .models import Category, Photo, ClientProfile, Gallery, ContactMessage
 
 
+# Custom Admin Site
+class CustomAdminSite(admin.AdminSite):
+    site_header = 'Daniel Ahlberg Photography'
+    site_title = 'DA Admin'
+    index_title = 'Photography Portfolio Administration'
+
+    class Media:
+        css = {
+            'all': ('admin/css/custom_admin.css',)
+        }
+
+
+# Create an instance of the custom admin site
+admin_site = CustomAdminSite(name='custom_admin')
+
+
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ['name', 'slug', 'order', 'photo_count']

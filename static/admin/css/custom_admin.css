@@ -1,0 +1,458 @@
+/* Django Admin Custom Styling - Clean & Readable */
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&family=Oswald:wght@300;400;500&display=swap');
+
+:root {
+    --primary-dark: #252525;
+    --primary-light: #ffffff;
+    --text-dark: #252525;
+    --text-light: #ffffff;
+    --border-color: #dee2e6;
+    --bg-light: #f8f9fa;
+}
+
+/* Global Override - Force readable colors everywhere */
+* {
+    color: var(--text-dark) !important;
+}
+
+#header *,
+.module h2 *,
+.module caption *,
+.inline-group h2 *,
+.button, .button *,
+input[type=submit], input[type=submit] *,
+.object-tools a, .object-tools a *,
+.paginator .this-page, .paginator .this-page *,
+.deletelink, .deletelink *,
+.messagelist .success, .messagelist .success *,
+.messagelist .error, .messagelist .error *,
+.errornote, .errornote *,
+.calendarbox h2, .calendarbox h2 *,
+.calendar caption, .calendar caption * {
+    color: var(--text-light) !important;
+}
+
+/* Base Typography */
+body, input, select, textarea {
+    font-family: 'Lato', sans-serif !important;
+    color: var(--text-dark) !important;
+    background: var(--primary-light) !important;
+}
+
+h1, h2, h3, h4, h5, h6,
+.module h2, .module caption, .inline-group h2,
+#branding h1 {
+    font-family: 'Oswald', sans-serif !important;
+    font-weight: 300 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 2px !important;
+}
+
+/* Header */
+#header {
+    background: var(--primary-dark) !important;
+    color: var(--text-light) !important;
+}
+
+#branding h1,
+#branding h1 a:link,
+#branding h1 a:visited {
+    color: var(--text-light) !important;
+}
+
+#user-tools a {
+    color: var(--text-light) !important;
+}
+
+/* Breadcrumbs */
+div.breadcrumbs {
+    background: var(--bg-light) !important;
+    color: var(--text-dark) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+div.breadcrumbs a {
+    color: var(--text-dark) !important;
+    text-decoration: underline;
+}
+
+/* Main Content Area */
+#content {
+    background: var(--primary-light) !important;
+    color: var(--text-dark) !important;
+}
+
+/* Module Headers */
+.module h2,
+.module h2 a,
+.module h2 span,
+.module caption,
+.module caption a,
+.module caption span,
+.inline-group h2,
+.inline-group h2 a,
+.inline-group h2 span {
+    background: var(--primary-dark) !important;
+    color: var(--text-light) !important;
+    padding: 12px 15px !important;
+    white-space: normal !important;
+    line-height: 1.6 !important;
+    font-size: 0.85rem !important;
+    display: block !important;
+    min-height: auto !important;
+}
+
+.module h2 *,
+.module caption *,
+.inline-group h2 * {
+    color: var(--text-light) !important;
+    background: transparent !important;
+}
+
+/* Module Content */
+.module {
+    background: var(--primary-light) !important;
+    border: 1px solid var(--border-color) !important;
+    margin-bottom: 20px !important;
+}
+
+.module table {
+    background: var(--primary-light) !important;
+}
+
+.module table th,
+.module table td {
+    background: var(--primary-light) !important;
+    color: var(--text-dark) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+.module table tr:hover {
+    background: var(--bg-light) !important;
+}
+
+/* Tables */
+table {
+    background: var(--primary-light) !important;
+}
+
+#result_list {
+    border: 1px solid var(--border-color) !important;
+}
+
+#result_list thead th {
+    background: var(--bg-light) !important;
+    color: var(--text-dark) !important;
+    border-bottom: 2px solid var(--border-color) !important;
+    font-weight: 500 !important;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+}
+
+#result_list tbody tr {
+    background: var(--primary-light) !important;
+    color: var(--text-dark) !important;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+#result_list tbody tr:hover {
+    background: var(--bg-light) !important;
+}
+
+#result_list tbody td,
+#result_list tbody th {
+    color: var(--text-dark) !important;
+}
+
+/* Links */
+a:link, a:visited {
+    color: var(--text-dark) !important;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #666 !important;
+}
+
+/* Buttons */
+.button,
+input[type=submit],
+input[type=button],
+.submit-row input,
+button,
+.object-tools a {
+    background: var(--primary-dark) !important;
+    color: var(--text-light) !important;
+    border: none !important;
+    padding: 10px 20px !important;
+    font-family: 'Lato', sans-serif !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 0.9rem;
+}
+
+.button:hover,
+input[type=submit]:hover,
+input[type=button]:hover,
+.object-tools a:hover {
+    background: #3a3a3a !important;
+    color: var(--text-light) !important;
+    text-decoration: none !important;
+}
+
+/* Delete Button */
+.deletelink, .deletelink-box {
+    background: #dc3545 !important;
+    color: var(--text-light) !important;
+}
+
+.deletelink:hover, .deletelink-box:hover {
+    background: #c82333 !important;
+}
+
+/* Forms */
+.form-row {
+    background: var(--primary-light) !important;
+    padding: 10px !important;
+    border-bottom: 1px solid var(--border-color) !important;
+}
+
+.form-row label {
+    color: var(--text-dark) !important;
+    font-weight: 500;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="email"],
+input[type="url"],
+input[type="number"],
+input[type="date"],
+textarea,
+select {
+    background: var(--primary-light) !important;
+    color: var(--text-dark) !important;
+    border: 1px solid var(--border-color) !important;
+    padding: 8px 12px !important;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="number"]:focus,
+textarea:focus,
+select:focus {
+    border-color: var(--primary-dark) !important;
+    outline: none !important;
+}
+
+/* Help Text */
+.help, p.help, form .help {
+    color: #666 !important;
+    font-size: 0.9rem;
+}
+
+/* Dashboard Modules */
+#content-main .module h2 a {
+    color: var(--text-light) !important;
+    text-decoration: none !important;
+}
+
+.module ul {
+    background: var(--primary-light) !important;
+    padding: 10px !important;
+}
+
+.module ul li {
+    background: var(--primary-light) !important;
+}
+
+.module ul li a,
+.module caption a,
+.addlink,
+.changelink,
+.viewlink,
+.module tr th a,
+.module td a {
+    color: var(--text-dark) !important;
+    background: var(--primary-light) !important;
+}
+
+.module ul li a:hover {
+    background: var(--bg-light) !important;
+}
+
+/* Dashboard App Lists */
+.app-portfolio .module,
+.app-auth .module,
+.app-sites .module {
+    background: var(--primary-light) !important;
+}
+
+.app-portfolio caption,
+.app-auth caption,
+.app-sites caption {
+    background: var(--primary-dark) !important;
+    color: var(--text-light) !important;
+}
+
+.app-portfolio td a,
+.app-auth td a,
+.app-sites td a,
+.app-portfolio th a,
+.app-auth th a,
+.app-sites th a {
+    color: var(--text-dark) !important;
+    background: transparent !important;
+}
+
+/* Sidebar Filter */
+#changelist-filter {
+    background: var(--primary-light) !important;
+    border-left: 1px solid var(--border-color) !important;
+}
+
+#changelist-filter h2 {
+    background: var(--primary-dark) !important;
+    color: var(--text-light) !important;
+}
+
+#changelist-filter h3 {
+    color: var(--text-dark) !important;
+    font-weight: 500;
+}
+
+#changelist-filter li a {
+    color: var(--text-dark) !important;
+}
+
+#changelist-filter li.selected a {
+    color: var(--text-dark) !important;
+    font-weight: 700;
+}
+
+/* Messages */
+.messagelist li {
+    background: var(--primary-light) !important;
+    color: var(--text-dark) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+.messagelist .success {
+    background: #28a745 !important;
+    color: var(--text-light) !important;
+}
+
+.messagelist .error,
+.errornote {
+    background: #dc3545 !important;
+    color: var(--text-light) !important;
+}
+
+.messagelist .warning {
+    background: #ffc107 !important;
+    color: var(--text-dark) !important;
+}
+
+/* Pagination */
+.paginator,
+.paginator * {
+    background: transparent !important;
+    color: var(--text-dark) !important;
+}
+
+.paginator a:link,
+.paginator a:visited {
+    background: var(--primary-light) !important;
+    color: var(--text-dark) !important;
+    border: 1px solid var(--border-color) !important;
+    padding: 5px 10px;
+    text-decoration: none !important;
+}
+
+.paginator a:hover {
+    background: var(--primary-dark) !important;
+    color: var(--text-light) !important;
+}
+
+.paginator .this-page {
+    background: var(--primary-dark) !important;
+    color: var(--text-light) !important;
+    padding: 5px 10px;
+}
+
+/* Result count text */
+.paginator .this-page,
+p.paginator {
+    color: var(--text-dark) !important;
+    background: transparent !important;
+}
+
+/* Login Page */
+.login {
+    background: var(--bg-light) !important;
+}
+
+.login #content {
+    background: transparent !important;
+}
+
+.login form {
+    background: var(--primary-light) !important;
+    border: 1px solid var(--border-color) !important;
+}
+
+.login .form-row label {
+    color: var(--text-dark) !important;
+}
+
+/* Action Bar */
+.actions {
+    background: var(--bg-light) !important;
+    padding: 10px !important;
+}
+
+.actions label,
+.actions select,
+.actions span {
+    color: var(--text-dark) !important;
+}
+
+/* Calendar Widget */
+.calendarbox,
+.calendar {
+    background: var(--primary-light) !important;
+    color: var(--text-dark) !important;
+}
+
+.calendarbox h2,
+.calendar caption {
+    background: var(--primary-dark) !important;
+    color: var(--text-light) !important;
+}
+
+/* Inline Forms */
+.inline-related h3 {
+    background: var(--bg-light) !important;
+    color: var(--text-dark) !important;
+}
+
+/* Field Errors */
+.errorlist {
+    color: #dc3545 !important;
+    background: #fff !important;
+    border: 1px solid #dc3545 !important;
+    padding: 5px 10px !important;
+}
+
+/* Change List Filters */
+#changelist .toplinks a {
+    color: var(--text-dark) !important;
+}
+
+#changelist .toplinks .selected a {
+    color: var(--text-dark) !important;
+    font-weight: 700;
+}

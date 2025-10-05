@@ -346,6 +346,8 @@ body:not(.hero-page) .navbar-toggler-bar {
     padding: 4px 8px;
     outline: none !important;
     box-shadow: none !important;
+    position: relative;
+    height: 30px;
 }
 
 .navbar-toggler:focus {
@@ -976,11 +978,15 @@ body:not(.hero-page) .navbar-toggler-bar {
 @media (max-width: 768px) {
     /* Move navbar toggler to right for one-handed use */
     .navbar .container {
+        display: flex;
         justify-content: space-between;
+        align-items: center;
     }
 
     .navbar-translate {
         order: 1;
+        display: flex;
+        align-items: center;
     }
 
     .navbar-toggler {
