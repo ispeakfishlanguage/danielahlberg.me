@@ -38,11 +38,11 @@
             <button class="advanced-filter-btn active" data-filter="all">
                 <span>All</span>
             </button>
-            <button class="advanced-filter-btn" data-filter="portraits">
-                <span>Portraits</span>
+            <button class="advanced-filter-btn" data-filter="portrait">
+                <span>Portrait</span>
             </button>
-            <button class="advanced-filter-btn" data-filter="landscape">
-                <span>Landscapes</span>
+            <button class="advanced-filter-btn" data-filter="nature">
+                <span>Nature</span>
             </button>
             <button class="advanced-filter-btn" data-filter="events">
                 <span>Events</span>
@@ -54,175 +54,20 @@
 
         <!-- Advanced Portfolio Grid -->
         <div class="advanced-portfolio-grid" id="portfolio-grid">
-
-            <div class="grid-item grid-large-landscape" data-category="landscape" data-delay="0">
-                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=90"
-                     alt="Mountain Vista" class="grid-image" data-title="Mountain Vista" data-description="Sunrise over the peaks" loading="lazy">
+            {% for photo in photos %}
+            <div class="grid-item grid-large-landscape" data-category="{{ photo.category.slug }}" data-delay="{{ forloop.counter0|add:100 }}">
+                <img src="{{ photo.image.url }}"
+                     alt="{{ photo.title }}" class="grid-image" data-title="{{ photo.title }}" data-description="{{ photo.description|default:'Photo by Daniel Ahlberg' }}" loading="lazy">
                 <div class="image-overlay">
                     <div class="overlay-content">
-                        <h3>Mountain Vista</h3>
-                        <p>Landscape Photography</p>
+                        <h3>{{ photo.title }}</h3>
+                        <p>{{ photo.category.name }}</p>
                     </div>
                 </div>
             </div>
+            {% endfor %}
 
-            <div class="grid-item grid-portrait" data-category="portraits" data-delay="200">
-                <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=90"
-                     alt="Fashion Portrait" class="grid-image" data-title="Fashion Portrait" data-description="Studio fashion photography session" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Fashion Portrait</h3>
-                        <p>Studio Photography</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid-item grid-square" data-category="projects" data-delay="100">
-                <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=90"
-                     alt="Urban Life" class="grid-image" data-title="Urban Project" data-description="Creative urban photography project" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Urban Project</h3>
-                        <p>Creative Photography</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid-item grid-medium-landscape" data-category="events" data-delay="300">
-                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=90"
-                     alt="Wedding Ceremony" class="grid-image" data-title="Wedding Ceremony" data-description="Intimate wedding moment" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Wedding Ceremony</h3>
-                        <p>Event Photography</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid-item grid-small-square" data-category="portraits" data-delay="150">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=90"
-                     alt="Professional Portrait" class="grid-image" data-title="Professional Portrait" data-description="Corporate headshot session" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Professional</h3>
-                        <p>Headshots</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid-item grid-wide-landscape" data-category="landscape" data-delay="250">
-                <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=90"
-                     alt="Lake Reflection" class="grid-image" data-title="Lake Reflection" data-description="Perfect mirror reflection" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Lake Reflection</h3>
-                        <p>Nature Photography</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Row 4 -->
-            <div class="grid-item grid-portrait-tall" data-category="portraits" data-delay="400">
-                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=90"
-                     alt="Natural Portrait" class="grid-image" data-title="Natural Portrait" data-description="Outdoor portrait session" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Natural Portrait</h3>
-                        <p>Outdoor Session</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid-item grid-medium-square" data-category="landscape" data-delay="350">
-                <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=90"
-                     alt="Golden Hour" class="grid-image" data-title="Golden Hour" data-description="Sunset landscape photography" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Golden Hour</h3>
-                        <p>Sunset Photography</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid-item grid-small-portrait" data-category="projects" data-delay="500">
-                <img src="https://images.unsplash.com/photo-1449824913935-59a10b8d2000?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=90"
-                     alt="Architecture Project" class="grid-image" data-title="Architecture Project" data-description="Modern architectural photography series" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Architecture</h3>
-                        <p>Photo Series</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Row 5 -->
-            <div class="grid-item grid-large-square" data-category="events" data-delay="200">
-                <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=90"
-                     alt="Wedding Reception" class="grid-image" data-title="Wedding Reception" data-description="Celebration moments" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Wedding Reception</h3>
-                        <p>Celebration</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid-item grid-medium-portrait" data-category="portraits" data-delay="300">
-                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=90"
-                     alt="Lifestyle Portrait" class="grid-image" data-title="Lifestyle Portrait" data-description="Candid lifestyle moment" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Lifestyle</h3>
-                        <p>Candid Moments</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Row 6 -->
-            <div class="grid-item grid-ultra-wide" data-category="landscape" data-delay="100">
-                <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=90"
-                     alt="Forest Path" class="grid-image" data-title="Forest Path" data-description="Morning light through trees" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Forest Path</h3>
-                        <p>Morning Light</p>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Row 7 -->
-            <div class="grid-item grid-small-landscape" data-category="events" data-delay="450">
-                <img src="https://images.unsplash.com/photo-1511795409834-ef04bbd61622?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=90"
-                     alt="Corporate Event" class="grid-image" data-title="Corporate Event" data-description="Business conference photography" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Corporate Event</h3>
-                        <p>Business Photography</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid-item grid-square-large" data-category="projects" data-delay="150">
-                <img src="https://images.unsplash.com/photo-1519501025264-65ba15a82390?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=90"
-                     alt="Urban Documentary" class="grid-image" data-title="Urban Documentary" data-description="Documentary photography project" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Urban Documentary</h3>
-                        <p>Photo Project</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid-item grid-portrait-medium" data-category="portraits" data-delay="600">
-                <img src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=90"
-                     alt="Creative Portrait" class="grid-image" data-title="Creative Portrait" data-description="Artistic portrait session" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Creative Portrait</h3>
-                        <p>Artistic Vision</p>
-                    </div>
-                </div>
-            </div>
+            {% endif %}
         </div>
     </div>
 
