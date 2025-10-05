@@ -132,10 +132,12 @@ def gallery_detail(request, slug):
                 return render(request, 'portfolio/gallery_password.html', {'form': form, 'gallery': gallery})
 
     photos = gallery.photos.all()
+    selected_photo_ids = list(gallery.selected_photos.values_list('id', flat=True))
 
     context = {
         'gallery': gallery,
         'photos': photos,
+        'selected_photo_ids': selected_photo_ids,
     }
     return render(request, 'portfolio/gallery_detail.html', context)
 
@@ -163,3 +165,51 @@ def filter_photos(request):
         })
 
     return JsonResponse({'photos': photo_data})
+
+# Photographer Dashboard Views
+@login_required
+def photographer_dashboard(request):
+    """Photographer's admin dashboard to manage client galleries"""
+    if not request.user.is_staff:
+        messages.error(request, 'Access denied. Staff only.')
+        return redirect('portfolio:home')
+    
+    galleries = Gallery.objects.all().select_related('client__user')
+    clients = ClientProfile.objects.all().select_related('user')
+    
+    context = {
+        'galleries': galleries,
+        'clients': clients,
+    }
+    return render(request, 'portfolio/photographer_dashboard.html', context)
+
+
+@login_required
+@require_POST
+def toggle_photo_selection(request, gallery_id, photo_id):
+    """Toggle photo selection by client"""
+    try:
+        gallery = Gallery.objects.get(id=gallery_id)
+        
+        # Check if user is the gallery owner (client) or staff
+        if not (request.user == gallery.client.user or request.user.is_staff):
+            return JsonResponse({'error': 'Permission denied'}, status=403)
+        
+        photo = Photo.objects.get(id=photo_id)
+        
+        # Toggle selection
+        if gallery.selected_photos.filter(id=photo_id).exists():
+            gallery.selected_photos.remove(photo)
+            selected = False
+        else:
+            gallery.selected_photos.add(photo)
+            selected = True
+        
+        return JsonResponse({
+            'success': True,
+            'selected': selected,
+            'total_selected': gallery.selected_photos.count()
+        })
+    
+    except (Gallery.DoesNotExist, Photo.DoesNotExist) as e:
+        return JsonResponse({'error': str(e)}, status=404)

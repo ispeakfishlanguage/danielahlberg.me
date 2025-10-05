@@ -11,22 +11,25 @@
             {% if gallery.description %}
             <p class="lead fw-light font-serif">{{ gallery.description }}</p>
             {% endif %}
-            <p class="text-muted font-modern">{{ photos.count }} photo{{ photos.count|pluralize }}</p>
+            <p class="text-muted font-modern">{{ photos.count }} photo{{ photos.count|pluralize }} | <span id="selection-count">{{ gallery.selected_photos.count }}</span> selected</p>
+            <p class="small text-muted">Click the heart icon on each photo to select your favorites for final delivery</p>
         </div>
 
         {% if photos %}
-        <div class="row g-1" style="max-width: 1400px; margin: 0 auto;">
+        <div class="row g-3" style="max-width: 1400px; margin: 0 auto;">
             {% for photo in photos %}
-            <div class="col-lg-4 col-md-6 col-12 gallery-item">
-                <img src="{% if photo.thumbnail %}{{ photo.thumbnail.url }}{% else %}{{ photo.image.url }}{% endif %}"
-                     alt="{{ photo.title }}"
-                     class="w-100 h-100 object-fit-cover gallery-image"
-                     style="aspect-ratio: 1; cursor: pointer;"
-                     data-full-image="{{ photo.image.url }}"
-                     data-title="{{ photo.title }}"
-                     data-description="{{ photo.description }}"
-                     data-location="{{ photo.location }}"
-                     data-date="{{ photo.date_taken|date:'F d, Y'|default:'' }}">
+            <div class="col-lg-4 col-md-6 col-12">
+                <div class="position-relative gallery-item" data-photo-id="{{ photo.id }}">
+                    <img src="{% firstof gallery.get_watermarked_url photo.image.url %}"
+                         alt="{{ photo.title }}"
+                         class="w-100 h-100 object-fit-cover gallery-image"
+                         style="aspect-ratio: 1;">
+                    <button class="btn btn-light position-absolute top-0 end-0 m-2 select-btn {% if photo.id in selected_photo_ids %}selected{% endif %}"
+                            data-photo-id="{{ photo.id }}"
+                            onclick="toggleSelection({{ gallery.id }}, {{ photo.id }}, this)">
+                        <i class="fas fa-heart"></i>
+                    </button>
+                </div>
             </div>
             {% endfor %}
         </div>
@@ -49,61 +52,59 @@
 </section>
 {% endblock %}
 
+{% block extra_css %}
+<style>
+.select-btn {
+    opacity: 0.7;
+    transition: all 0.3s;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    padding: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+.select-btn:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+.select-btn.selected {
+    background-color: #dc3545 !important;
+    color: white !important;
+    opacity: 1;
+}
+.select-btn.selected i {
+    animation: heartBeat 0.3s;
+}
+@keyframes heartBeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+}
+</style>
+{% endblock %}
+
 {% block extra_js %}
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const galleryImages = document.querySelectorAll('.gallery-image');
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.querySelector('.lightbox-content');
-    const lightboxCaption = document.querySelector('.lightbox-caption');
-    const lightboxClose = document.querySelector('.lightbox-close');
-
-    galleryImages.forEach(img => {
-        img.addEventListener('click', function() {
-            const fullImage = this.getAttribute('data-full-image');
-            const title = this.getAttribute('data-title');
-            const description = this.getAttribute('data-description');
-            const location = this.getAttribute('data-location');
-            const date = this.getAttribute('data-date');
-
-            lightboxImg.src = fullImage;
-            lightboxImg.alt = title;
-
-            let captionHtml = '';
-            if (title) captionHtml += `<h3>${title}</h3>`;
-            if (description) captionHtml += `<p>${description}</p>`;
-            if (location || date) {
-                captionHtml += '<p class="small">';
-                if (location) captionHtml += location;
-                if (location && date) captionHtml += ' • ';
-                if (date) captionHtml += date;
-                captionHtml += '</p>';
-            }
-
-            lightboxCaption.innerHTML = captionHtml;
-            lightbox.style.display = 'block';
-            document.body.style.overflow = 'hidden';
-        });
-    });
-
-    function closeLightbox() {
-        lightbox.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
-
-    lightboxClose.addEventListener('click', closeLightbox);
-
-    lightbox.addEventListener('click', function(e) {
-        if (e.target === lightbox) {
-            closeLightbox();
+function toggleSelection(galleryId, photoId, button) {
+    fetch(`/gallery/${galleryId}/photo/${photoId}/toggle/`, {
+        method: 'POST',
+        headers: {
+            'X-CSRFToken': '{{ csrf_token }}',
+            'Content-Type': 'application/json',
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            button.classList.toggle('selected');
+            document.getElementById('selection-count').textContent = data.total_selected;
+        } else {
+            alert('Error: ' + (data.error || 'Unable to toggle selection'));
         }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('An error occurred. Please try again.');
     });
-
-    document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && lightbox.style.display === 'block') {
-            closeLightbox();
-        }
-    });
-});
+}
 </script>
 {% endblock %}

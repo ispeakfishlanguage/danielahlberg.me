@@ -15,6 +15,8 @@ urlpatterns = [
     path('gallery/', views.client_gallery, name='client_gallery'),
     path('gallery/<slug:slug>/', views.gallery_detail, name='gallery_detail'),
     path('api/filter-photos/', views.filter_photos, name='filter_photos'),
+    path('dashboard/', views.photographer_dashboard, name='photographer_dashboard'),
+    path('gallery/<int:gallery_id>/photo/<int:photo_id>/toggle/', views.toggle_photo_selection, name='toggle_photo_selection'),
 
     # SEO files
     path('robots.txt', views_seo.robots_txt, name='robots_txt'),

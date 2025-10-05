@@ -63,6 +63,7 @@ class Gallery(models.Model):
     description = models.TextField(blank=True)
     client = models.ForeignKey(ClientProfile, on_delete=models.CASCADE, related_name='galleries')
     photos = models.ManyToManyField(Photo, related_name='galleries')
+    selected_photos = models.ManyToManyField(Photo, related_name='selected_in_galleries', blank=True, help_text="Photos selected by client for final delivery")
     cover_photo = models.ForeignKey(Photo, on_delete=models.SET_NULL, null=True, blank=True, related_name='cover_for_galleries')
     created_date = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
@@ -78,6 +79,15 @@ class Gallery(models.Model):
 
     def get_absolute_url(self):
         return reverse('portfolio:gallery_detail', kwargs={'slug': self.slug})
+
+    def get_watermarked_url(self, photo):
+        """Get photo URL with watermark overlay"""
+        if photo.image:
+            return photo.image.build_url(transformation=[
+                {'overlay': 'text:Arial_40:Daniel%20Ahlberg', 'gravity': 'south_east', 'x': 20, 'y': 20, 'opacity': 60},
+                {'quality': 'auto', 'fetch_format': 'auto'}
+            ])
+        return None
 
 
 class ContactMessage(models.Model):

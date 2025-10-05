@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Photographer Dashboard - Daniel Ahlberg{% endblock %}
+
+{% block content %}
+<div class="container my-5" style="margin-top: 100px !important;">
+    <h1 class="mb-4">Photographer Dashboard</h1>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card mb-4">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="mb-0">Client Galleries</h3>
+                </div>
+                <div class="card-body">
+                    <a href="{% url 'admin:portfolio_gallery_add' %}" class="btn btn-primary mb-3">
+                        <i class="fas fa-plus"></i> Create New Gallery
+                    </a>
+
+                    {% if galleries %}
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Gallery Name</th>
+                                    <th>Client</th>
+                                    <th>Photos</th>
+                                    <th>Selected</th>
+                                    <th>Created</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for gallery in galleries %}
+                                <tr>
+                                    <td><strong>{{ gallery.name }}</strong></td>
+                                    <td>{{ gallery.client.user.get_full_name }}</td>
+                                    <td>{{ gallery.photos.count }}</td>
+                                    <td>
+                                        <span class="badge bg-success">{{ gallery.selected_photos.count }} selected</span>
+                                    </td>
+                                    <td>{{ gallery.created_date|date:"M d, Y" }}</td>
+                                    <td>
+                                        <a href="{% url 'portfolio:gallery_detail' gallery.slug %}" class="btn btn-sm btn-info">
+                                            <i class="fas fa-eye"></i> View
+                                        </a>
+                                        <a href="{% url 'admin:portfolio_gallery_change' gallery.id %}" class="btn btn-sm btn-warning">
+                                            <i class="fas fa-edit"></i> Edit
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <p class="text-muted">No galleries yet. Create your first client gallery!</p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header bg-dark text-white">
+                    <h3 class="mb-0">Quick Actions</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <a href="{% url 'admin:portfolio_clientprofile_add' %}" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-user-plus"></i><br>
+                                Add New Client
+                            </a>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <a href="{% url 'admin:portfolio_photo_add' %}" class="btn btn-outline-primary w-100">
+                                <i class="fas fa-camera"></i><br>
+                                Upload Photos
+                            </a>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <a href="{% url 'admin:index' %}" class="btn btn-outline-secondary w-100">
+                                <i class="fas fa-cog"></i><br>
+                                Full Admin Panel
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
