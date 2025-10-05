@@ -149,11 +149,19 @@ else:
 WHITENOISE_ALLOW_ALL_ORIGINS = True
 
 # Cloudinary configuration
+import cloudinary
+
 CLOUDINARY_STORAGE = {
     'CLOUD_NAME': env('CLOUDINARY_CLOUD_NAME', default=''),
     'API_KEY': env('CLOUDINARY_API_KEY', default=''),
     'API_SECRET': env('CLOUDINARY_API_SECRET', default=''),
 }
+
+cloudinary.config(
+    cloud_name=env('CLOUDINARY_CLOUD_NAME', default=''),
+    api_key=env('CLOUDINARY_API_KEY', default=''),
+    api_secret=env('CLOUDINARY_API_SECRET', default=''),
+)
 
 # Media files
 MEDIA_URL = '/media/'

@@ -16,17 +16,17 @@ class CategoryAdmin(admin.ModelAdmin):
 
 @admin.register(Photo)
 class PhotoAdmin(admin.ModelAdmin):
-    list_display = ['title', 'category', 'location', 'date_taken', 'is_featured', 'is_public', 'thumbnail_preview']
-    list_filter = ['category', 'is_featured', 'is_public', 'date_taken']
-    list_editable = ['is_featured', 'is_public']
+    list_display = ['title', 'category', 'location', 'date_taken', 'is_hero', 'is_featured', 'is_public', 'image_preview']
+    list_filter = ['category', 'is_hero', 'is_featured', 'is_public', 'date_taken']
+    list_editable = ['is_hero', 'is_featured', 'is_public']
     search_fields = ['title', 'description', 'location']
     date_hierarchy = 'date_uploaded'
 
-    def thumbnail_preview(self, obj):
-        if obj.thumbnail:
-            return format_html('<img src="{}" width="50" height="50" style="object-fit: cover;" />', obj.thumbnail.url)
-        return "No thumbnail"
-    thumbnail_preview.short_description = 'Preview'
+    def image_preview(self, obj):
+        if obj.image:
+            return format_html('<img src="{}" width="50" height="50" style="object-fit: cover;" />', obj.get_thumbnail_url())
+        return "No image"
+    image_preview.short_description = 'Preview'
 
 
 @admin.register(ClientProfile)

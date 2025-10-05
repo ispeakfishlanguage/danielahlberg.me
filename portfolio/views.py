@@ -11,8 +11,10 @@ from .forms import ContactForm, ClientLoginForm, GalleryPasswordForm
 
 def home(request):
     """Homepage with hero section and featured photos"""
+    hero_photos = Photo.objects.filter(is_hero=True, is_public=True)[:5]
     featured_photos = Photo.objects.filter(is_featured=True, is_public=True)[:6]
     context = {
+        'hero_photos': hero_photos,
         'featured_photos': featured_photos,
     }
     return render(request, 'portfolio/home.html', context)

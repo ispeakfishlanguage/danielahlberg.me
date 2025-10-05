@@ -97,21 +97,23 @@
     <!-- Background Carousel -->
     <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="6000">
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1547036967-23d11aacaee0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=90');"></div>
-            </div>
-            <div class="carousel-item">
-                <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1452587925148-ce544e77e70d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=90');"></div>
-            </div>
-            <div class="carousel-item">
-                <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=90');"></div>
-            </div>
-            <div class="carousel-item">
-                <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=90');"></div>
-            </div>
-            <div class="carousel-item">
-                <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=90');"></div>
-            </div>
+            {% if hero_photos %}
+                {% for photo in hero_photos %}
+                <div class="carousel-item {% if forloop.first %}active{% endif %}">
+                    <div class="hero-bg" style="background-image: url('{{ photo.image.url }}');"></div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="carousel-item active">
+                    <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1547036967-23d11aacaee0?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=90');"></div>
+                </div>
+                <div class="carousel-item">
+                    <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1452587925148-ce544e77e70d?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=90');"></div>
+                </div>
+                <div class="carousel-item">
+                    <div class="hero-bg" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2400&q=90');"></div>
+                </div>
+            {% endif %}
         </div>
     </div>
 
@@ -141,137 +143,31 @@
             <h2 class="portfolio-main-title">Featured Work</h2>
         </div>
         <div class="advanced-portfolio-grid" id="home-gallery">
-            <div class="grid-item grid-large-landscape" data-delay="0">
-                <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=90"
-                     alt="Mountain Vista" class="grid-image" data-title="Mountain Vista" data-description="Natural beauty captured" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Mountain Vista</h3>
-                        <p>Landscape Photography</p>
+            {% if featured_photos %}
+                {% for photo in featured_photos %}
+                <div class="grid-item grid-large-landscape" data-delay="{{ forloop.counter0|add:100 }}">
+                    <img src="{{ photo.image.url }}"
+                         alt="{{ photo.title }}" class="grid-image" data-title="{{ photo.title }}" data-description="{{ photo.description|default:'Featured work' }}" loading="lazy">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h3>{{ photo.title }}</h3>
+                            <p>{{ photo.category.name }}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="grid-item grid-portrait" data-delay="200">
-                <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=90"
-                     alt="Fashion Portrait" class="grid-image" data-title="Fashion Portrait" data-description="Studio elegance" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Fashion Portrait</h3>
-                        <p>Studio Photography</p>
+                {% endfor %}
+            {% else %}
+                <div class="grid-item grid-large-landscape" data-delay="0">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=90"
+                         alt="Mountain Vista" class="grid-image" data-title="Mountain Vista" data-description="Natural beauty captured" loading="lazy">
+                    <div class="image-overlay">
+                        <div class="overlay-content">
+                            <h3>Mountain Vista</h3>
+                            <p>Landscape Photography</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="grid-item grid-square" data-delay="100">
-                <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=90"
-                     alt="Urban Life" class="grid-image" data-title="Urban Life" data-description="City moments" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Urban Life</h3>
-                        <p>Street Photography</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid-item grid-medium-landscape" data-delay="300">
-                <img src="https://images.unsplash.com/photo-1519741497674-611481863552?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=90"
-                     alt="Wedding Ceremony" class="grid-image" data-title="Wedding Moment" data-description="Love stories" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Wedding Moment</h3>
-                        <p>Event Photography</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid-item grid-small-square" data-delay="150">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=90"
-                     alt="Professional Portrait" class="grid-image" data-title="Professional Portrait" data-description="Corporate style" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Professional</h3>
-                        <p>Headshots</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid-item grid-wide-landscape" data-delay="250">
-                <img src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&auto=format&fit=crop&w=1400&q=90"
-                     alt="Lake Reflection" class="grid-image" data-title="Lakeside Serenity" data-description="Peaceful waters" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Lake Serenity</h3>
-                        <p>Nature Photography</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid-item grid-portrait-tall" data-delay="400">
-                <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=90"
-                     alt="Natural Portrait" class="grid-image" data-title="Natural Portrait" data-description="Authentic expression" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Natural Portrait</h3>
-                        <p>Outdoor Session</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid-item grid-medium-square" data-delay="350">
-                <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=90"
-                     alt="Golden Hour" class="grid-image" data-title="Golden Hour" data-description="Magic light" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Golden Hour</h3>
-                        <p>Sunset Photography</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid-item grid-small-portrait" data-delay="500">
-                <img src="https://images.unsplash.com/photo-1493863641943-9b68992a8d07?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=90"
-                     alt="Modern Lines" class="grid-image" data-title="Modern Lines" data-description="Architectural beauty" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Architecture</h3>
-                        <p>Urban Details</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid-item grid-large-square" data-delay="200">
-                <img src="https://images.unsplash.com/photo-1502920917128-1aa500764cbd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=90"
-                     alt="Portrait Session" class="grid-image" data-title="Portrait Session" data-description="Capturing authentic moments" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Portrait Session</h3>
-                        <p>Authentic Moments</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid-item grid-medium-portrait" data-delay="300">
-                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&auto=format&fit=crop&w=700&q=90"
-                     alt="Lifestyle Portrait" class="grid-image" data-title="Lifestyle Moment" data-description="Natural living" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Lifestyle</h3>
-                        <p>Natural Living</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="grid-item grid-ultra-wide" data-delay="100">
-                <img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=90"
-                     alt="Forest Path" class="grid-image" data-title="Forest Path" data-description="Nature's corridor" loading="lazy">
-                <div class="image-overlay">
-                    <div class="overlay-content">
-                        <h3>Forest Path</h3>
-                        <p>Nature's Corridor</p>
-                    </div>
-                </div>
-            </div>
+            {% endif %}
         </div>
 
         <div class="text-center mt-5">
@@ -337,7 +233,6 @@
 {% block extra_js %}
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialize hero carousel with 6-second interval
     const heroCarousel = document.getElementById('heroCarousel');
     if (heroCarousel) {
         const carousel = new bootstrap.Carousel(heroCarousel, {
@@ -348,7 +243,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
             const href = this.getAttribute('href');
@@ -367,9 +261,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Advanced Home Portfolio Gallery with Scroll Animations and Parallax
-
-    // Intersection Observer for scroll-triggered animations
     const observerOptions = {
         root: null,
         rootMargin: '-10% 0px -10% 0px',
@@ -381,7 +272,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (entry.isIntersecting) {
                 const item = entry.target;
                 const delay = item.getAttribute('data-delay') || 0;
-
                 setTimeout(() => {
                     item.classList.remove('scroll-animate');
                     item.classList.add('animate-in');
@@ -390,60 +280,14 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }, observerOptions);
 
-    // Parallax scroll effects for selected images
-    const homeParallaxObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const item = entry.target;
-                const speed = item.classList.contains('parallax-slow') ? 0.5 :
-                            item.classList.contains('parallax-medium') ? 0.3 : 0.7;
-
-                const scrolled = window.pageYOffset;
-                const rect = item.getBoundingClientRect();
-                const elementTop = rect.top + scrolled;
-
-                function updateHomeParallax() {
-                    const currentScroll = window.pageYOffset;
-                    const yPos = Math.max(0, (currentScroll - elementTop) * speed);
-
-                    // Only apply parallax if item is not currently animating in
-                    if (!item.classList.contains('scroll-animate')) {
-                        const currentTransform = item.style.transform || '';
-                        const scaleMatch = currentTransform.match(/scale\([^)]+\)/);
-                        const scaleTransform = scaleMatch ? scaleMatch[0] : 'scale(1)';
-                        item.style.transform = `translateY(${yPos}px) ${scaleTransform}`;
-                    }
-                }
-
-                window.addEventListener('scroll', updateHomeParallax);
-                updateHomeParallax();
-            }
-        });
-    }, {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0
-    });
-
-    // Initialize portfolio items
     const homePortfolioItems = document.querySelectorAll('#home-gallery .grid-item');
-    let homeVisibleItems = Array.from(homePortfolioItems);
-
-    // Add scroll-animate class initially for animation effect
     homePortfolioItems.forEach(item => {
         item.classList.add('scroll-animate');
         homePortfolioObserver.observe(item);
-
-        // Initialize parallax for items with parallax classes
-        if (item.classList.contains('parallax-slow') ||
-            item.classList.contains('parallax-medium') ||
-            item.classList.contains('parallax-fast')) {
-            homeParallaxObserver.observe(item);
-        }
     });
 
-    // Advanced Home Lightbox functionality
     let homeCurrentIndex = 0;
+    const homeVisibleItems = Array.from(homePortfolioItems);
     const homeLightbox = document.getElementById('home-advanced-lightbox');
     const homeLightboxImage = homeLightbox.querySelector('.lightbox-image');
     const homeLightboxTitle = homeLightbox.querySelector('.lightbox-title');
@@ -469,39 +313,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const img = currentItem.querySelector('.grid-image');
         const title = img.getAttribute('data-title');
         const description = img.getAttribute('data-description');
-
-        // Get high resolution version
-        const highResSrc = img.src.replace('w=800', 'w=1600').replace('w=600', 'w=1600').replace('w=700', 'w=1600');
-
-        homeLightboxImage.src = highResSrc;
+        homeLightboxImage.src = img.src;
         homeLightboxImage.alt = title;
         homeLightboxTitle.textContent = title;
         homeLightboxDescription.textContent = description;
-
-        // Update navigation
         homePrevBtn.disabled = homeCurrentIndex === 0;
         homeNextBtn.disabled = homeCurrentIndex === homeVisibleItems.length - 1;
-
-        // Preload adjacent images
-        preloadHomeImages();
-    }
-
-    function preloadHomeImages() {
-        // Preload next image
-        if (homeCurrentIndex < homeVisibleItems.length - 1) {
-            const nextImg = homeVisibleItems[homeCurrentIndex + 1].querySelector('.grid-image');
-            const nextHighRes = nextImg.src.replace('w=800', 'w=1600').replace('w=600', 'w=1600').replace('w=700', 'w=1600');
-            const preloadNext = new Image();
-            preloadNext.src = nextHighRes;
-        }
-
-        // Preload previous image
-        if (homeCurrentIndex > 0) {
-            const prevImg = homeVisibleItems[homeCurrentIndex - 1].querySelector('.grid-image');
-            const prevHighRes = prevImg.src.replace('w=800', 'w=1600').replace('w=600', 'w=1600').replace('w=700', 'w=1600');
-            const preloadPrev = new Image();
-            preloadPrev.src = prevHighRes;
-        }
     }
 
     function nextHomeImage() {
@@ -518,7 +335,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Event listeners
     homePortfolioItems.forEach((item, index) => {
         item.addEventListener('click', function() {
             const visibleIndex = homeVisibleItems.indexOf(item);
@@ -536,7 +352,6 @@ document.addEventListener('DOMContentLoaded', function() {
     homeNextBtn.addEventListener('click', nextHomeImage);
     homePrevBtn.addEventListener('click', prevHomeImage);
 
-    // Keyboard navigation
     document.addEventListener('keydown', function(e) {
         if (homeLightbox.classList.contains('active')) {
             switch(e.key) {
