@@ -31,13 +31,8 @@ def portfolio(request):
         category = get_object_or_404(Category, slug=category_slug)
         photos = photos.filter(category=category)
 
-    # Pagination
-    paginator = Paginator(photos, 12)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
-
     context = {
-        'photos': page_obj,
+        'photos': photos,
         'categories': categories,
         'current_category': category_slug,
     }
