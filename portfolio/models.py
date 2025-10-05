@@ -1,8 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.urls import reverse
-from PIL import Image
-import os
+from cloudinary.models import CloudinaryField
 
 
 class Category(models.Model):
@@ -21,8 +20,7 @@ class Category(models.Model):
 
 class Photo(models.Model):
     title = models.CharField(max_length=200)
-    image = models.ImageField(upload_to='photos/%Y/%m/%d/')
-    thumbnail = models.ImageField(upload_to='thumbnails/%Y/%m/%d/', blank=True)
+    image = CloudinaryField('image', folder='portfolio/photos')
     category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='photos')
     description = models.TextField(blank=True)
     location = models.CharField(max_length=200, blank=True)
@@ -37,28 +35,13 @@ class Photo(models.Model):
     def __str__(self):
         return self.title
 
-    def save(self, *args, **kwargs):
-        super().save(*args, **kwargs)
-        if self.image and not self.thumbnail:
-            self.create_thumbnail()
-
-    def create_thumbnail(self):
-        if not self.image:
-            return
-
-        img = Image.open(self.image.path)
-        img.thumbnail((400, 400), Image.Resampling.LANCZOS)
-
-        # Save thumbnail
-        thumb_name = os.path.splitext(os.path.basename(self.image.name))[0] + '_thumb.jpg'
-        thumb_path = os.path.join('thumbnails', os.path.dirname(self.image.name).replace('photos/', ''), thumb_name)
-
-        full_thumb_path = os.path.join('media', thumb_path)
-        os.makedirs(os.path.dirname(full_thumb_path), exist_ok=True)
-
-        img.save(full_thumb_path, 'JPEG', quality=85)
-        self.thumbnail = thumb_path
-        super().save(update_fields=['thumbnail'])
+    def get_thumbnail_url(self):
+        """Generate thumbnail URL using Cloudinary transformations"""
+        if self.image:
+            return self.image.build_url(transformation=[
+                {'width': 400, 'height': 400, 'crop': 'limit', 'quality': 'auto'}
+            ])
+        return None
 
 
 class ClientProfile(models.Model):
