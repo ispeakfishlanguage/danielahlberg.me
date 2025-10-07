@@ -28,6 +28,7 @@ class Photo(models.Model):
     date_uploaded = models.DateTimeField(auto_now_add=True)
     is_featured = models.BooleanField(default=False)
     is_hero = models.BooleanField(default=False, help_text="Display in hero carousel")
+    is_about_photo = models.BooleanField(default=False, help_text="Use as Daniel's photo in About section")
     is_public = models.BooleanField(default=True)
 
     class Meta:

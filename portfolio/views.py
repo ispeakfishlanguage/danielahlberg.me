@@ -12,10 +12,12 @@ from .forms import ContactForm, ClientLoginForm, GalleryPasswordForm
 def home(request):
     """Homepage with hero section and featured photos"""
     hero_photos = Photo.objects.filter(is_hero=True, is_public=True)[:5]
-    featured_photos = Photo.objects.filter(is_featured=True, is_public=True)[:6]
+    featured_photos = Photo.objects.filter(is_featured=True, is_public=True)[:12]
+    about_photo = Photo.objects.filter(is_about_photo=True, is_public=True).first()
     context = {
         'hero_photos': hero_photos,
         'featured_photos': featured_photos,
+        'about_photo': about_photo,
     }
     return render(request, 'portfolio/home.html', context)
 
@@ -41,7 +43,11 @@ def portfolio(request):
 
 def about(request):
     """About page"""
-    return render(request, 'portfolio/about.html')
+    about_photo = Photo.objects.filter(is_about_photo=True, is_public=True).first()
+    context = {
+        'about_photo': about_photo,
+    }
+    return render(request, 'portfolio/about.html', context)
 
 
 def contact(request):

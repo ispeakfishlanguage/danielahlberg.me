@@ -196,9 +196,15 @@
 
             <!-- Image - shows on both -->
             <div class="col-lg-4 col-12 text-center about-image">
+                {% if about_photo %}
+                <img src="{{ about_photo.image.url }}"
+                     alt="Daniel Ahlberg - Stockholm Photographer"
+                     class="img-fluid rounded shadow">
+                {% else %}
                 <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
                      alt="Daniel Ahlberg - Stockholm Photographer"
                      class="img-fluid rounded shadow">
+                {% endif %}
             </div>
 
             <!-- Text and buttons on mobile only, shown after image -->

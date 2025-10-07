@@ -120,13 +120,38 @@ document.addEventListener('DOMContentLoaded', function() {
     const portfolioItems = document.querySelectorAll('.grid-item');
     let visibleItems = Array.from(portfolioItems);
 
-    // Add scroll-animate class initially for animation effect
-    portfolioItems.forEach(item => {
-        item.classList.add('scroll-animate');
-        portfolioObserver.observe(item);
+    // Show items with fade-in after images load
+    let imagesLoaded = 0;
+    const totalImages = portfolioItems.length;
 
-        // Parallax initialization removed
+    function checkAllImagesLoaded() {
+        if (imagesLoaded === totalImages) {
+            // All images loaded, fade them in
+            setTimeout(() => {
+                portfolioItems.forEach(item => item.classList.add('animate-in'));
+            }, 100);
+        }
+    }
+
+    portfolioItems.forEach((item, index) => {
+        const img = item.querySelector('.grid-image');
+
+        // Check if image is already loaded
+        if (img.complete) {
+            imagesLoaded++;
+        } else {
+            img.addEventListener('load', function() {
+                imagesLoaded++;
+                checkAllImagesLoaded();
+            });
+        }
+
+        // Only observe for scroll animations after initial load
+        portfolioObserver.observe(item);
     });
+
+    // Check if all images were already loaded
+    checkAllImagesLoaded();
 
     // Advanced filtering with smooth animations
     const filterBtns = document.querySelectorAll('.advanced-filter-btn');

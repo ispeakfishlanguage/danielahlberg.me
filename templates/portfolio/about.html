@@ -85,9 +85,15 @@
                 </div>
             </div>
             <div class="col-lg-4 col-md-5 text-center">
+                {% if about_photo %}
+                <img src="{{ about_photo.image.url }}"
+                     alt="Daniel Ahlberg - Stockholm Photographer"
+                     class="img-fluid rounded shadow">
+                {% else %}
                 <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=80"
                      alt="Daniel Ahlberg - Stockholm Photographer"
                      class="img-fluid rounded shadow">
+                {% endif %}
 
                 <div class="mt-4 text-start">
                     <h4 class="h6 fw-light mb-3 font-heading-primary">Experience</h4>
