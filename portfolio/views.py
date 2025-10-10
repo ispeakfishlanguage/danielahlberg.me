@@ -13,7 +13,7 @@ def home(request):
     """Homepage with hero section and featured photos"""
     hero_photos = Photo.objects.filter(is_hero=True, is_public=True)[:5]
     featured_photos = Photo.objects.filter(is_featured=True, is_public=True)[:12]
-    about_photo = Photo.objects.filter(is_about_photo=True, is_public=True).first()
+    about_photo = Photo.objects.filter(is_about_photo=True).first()
     context = {
         'hero_photos': hero_photos,
         'featured_photos': featured_photos,
@@ -27,7 +27,7 @@ def portfolio(request):
     categories = Category.objects.all()
     category_slug = request.GET.get('category')
 
-    photos = Photo.objects.filter(is_public=True)
+    photos = Photo.objects.filter(is_public=True, is_about_photo=False)
 
     if category_slug:
         category = get_object_or_404(Category, slug=category_slug)
@@ -43,7 +43,7 @@ def portfolio(request):
 
 def about(request):
     """About page"""
-    about_photo = Photo.objects.filter(is_about_photo=True, is_public=True).first()
+    about_photo = Photo.objects.filter(is_about_photo=True).first()
     context = {
         'about_photo': about_photo,
     }
@@ -154,9 +154,9 @@ def filter_photos(request):
     category_slug = request.POST.get('category')
 
     if category_slug and category_slug != 'all':
-        photos = Photo.objects.filter(category__slug=category_slug, is_public=True)
+        photos = Photo.objects.filter(category__slug=category_slug, is_public=True, is_about_photo=False)
     else:
-        photos = Photo.objects.filter(is_public=True)
+        photos = Photo.objects.filter(is_public=True, is_about_photo=False)
 
     photo_data = []
     for photo in photos:
