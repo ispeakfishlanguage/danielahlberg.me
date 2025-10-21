@@ -1,0 +1,173 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Register - Daniel Ahlberg{% endblock %}
+
+{% block content %}
+<section class="py-5 mt-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card shadow">
+                    <div class="card-body p-5">
+                        <h2 class="text-center mb-4 h3 fw-light font-heading-secondary">Create Account</h2>
+                        <p class="text-center text-muted mb-4 font-modern">Register to access your photo gallery</p>
+
+                        <!-- Error/Success Messages -->
+                        <div id="auth-message" class="alert d-none" role="alert"></div>
+
+                        <!-- Registration Form -->
+                        <form id="register-form">
+                            {% csrf_token %}
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" required minlength="6">
+                                <div class="form-text">Password must be at least 6 characters</div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="confirm-password" class="form-label">Confirm Password</label>
+                                <input type="password" class="form-control" id="confirm-password" name="confirm_password" required minlength="6">
+                            </div>
+
+                            <button type="submit" class="btn btn-dark w-100 fw-light text-uppercase font-modern mb-3" id="register-btn">
+                                <span class="spinner-border spinner-border-sm d-none" id="register-spinner"></span>
+                                <span id="register-text">Create Account</span>
+                            </button>
+                        </form>
+
+                        <!-- Divider -->
+                        <div class="text-center my-3">
+                            <span class="text-muted small">OR</span>
+                        </div>
+
+                        <!-- Google Sign-In Button -->
+                        <button type="button" class="btn btn-outline-dark w-100 fw-light font-modern mb-3" id="google-signin-btn">
+                            <i class="fab fa-google me-2"></i>
+                            Sign up with Google
+                        </button>
+
+                        <!-- Additional Links -->
+                        <div class="text-center mt-4">
+                            <p class="small text-muted font-modern">
+                                Already have an account? <a href="{% url 'portfolio:login' %}" class="text-decoration-none">Sign in</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/firebase-auth.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const registerForm = document.getElementById('register-form');
+    const googleSignInBtn = document.getElementById('google-signin-btn');
+    const authMessage = document.getElementById('auth-message');
+    const registerBtn = document.getElementById('register-btn');
+    const registerSpinner = document.getElementById('register-spinner');
+    const registerText = document.getElementById('register-text');
+
+    // Show message helper
+    function showMessage(message, type) {
+        authMessage.className = `alert alert-${type}`;
+        authMessage.textContent = message;
+        authMessage.classList.remove('d-none');
+    }
+
+    // Hide message helper
+    function hideMessage() {
+        authMessage.classList.add('d-none');
+    }
+
+    // Registration with Email/Password
+    registerForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        hideMessage();
+
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+
+        // Validate passwords match
+        if (password !== confirmPassword) {
+            showMessage('Passwords do not match', 'danger');
+            return;
+        }
+
+        // Validate password length
+        if (password.length < 6) {
+            showMessage('Password must be at least 6 characters', 'danger');
+            return;
+        }
+
+        // Show loading state
+        registerBtn.disabled = true;
+        registerSpinner.classList.remove('d-none');
+        registerText.textContent = 'Creating account...';
+
+        try {
+            await firebaseAuthManager.registerWithEmail(email, password, name);
+            showMessage('Account created successfully! Redirecting...', 'success');
+
+            // Redirect to client gallery
+            setTimeout(() => {
+                window.location.href = '{% url "portfolio:client_gallery" %}';
+            }, 1500);
+        } catch (error) {
+            showMessage(error.message, 'danger');
+            registerBtn.disabled = false;
+            registerSpinner.classList.add('d-none');
+            registerText.textContent = 'Create Account';
+        }
+    });
+
+    // Google Sign-In
+    googleSignInBtn.addEventListener('click', async function() {
+        hideMessage();
+
+        try {
+            await firebaseAuthManager.signInWithGoogle();
+            showMessage('Account created successfully! Redirecting...', 'success');
+
+            // Redirect to client gallery
+            setTimeout(() => {
+                window.location.href = '{% url "portfolio:client_gallery" %}';
+            }, 1500);
+        } catch (error) {
+            showMessage(error.message, 'danger');
+        }
+    });
+
+    // Real-time password confirmation validation
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirm-password');
+
+    confirmPasswordInput.addEventListener('input', function() {
+        if (this.value && passwordInput.value !== this.value) {
+            this.setCustomValidity('Passwords do not match');
+        } else {
+            this.setCustomValidity('');
+        }
+    });
+
+    passwordInput.addEventListener('input', function() {
+        if (confirmPasswordInput.value) {
+            confirmPasswordInput.dispatchEvent(new Event('input'));
+        }
+    });
+});
+</script>
+{% endblock %}

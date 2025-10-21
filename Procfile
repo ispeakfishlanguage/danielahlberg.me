@@ -1,1 +1,2 @@
-web: gunicorn photography_config.wsgi:application --bind 0.0.0.0:${PORT:-8000}
+web: gunicorn photography_config.wsgi:application --bind 0.0.0.0:$PORT
+release: python manage.py migrate --noinput && python manage.py collectstatic --noinput

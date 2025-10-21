@@ -19,7 +19,11 @@ import secrets
 SECRET_KEY = env('SECRET_KEY', default=secrets.token_urlsafe(50) if 'RAILWAY_ENVIRONMENT' in os.environ else 'django-insecure-your-secret-key-here')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG', default=False if 'RAILWAY_ENVIRONMENT' in os.environ else True)
+DEBUG = env('DEBUG', default=False if any([
+    'RAILWAY_ENVIRONMENT' in os.environ,
+    'GAE_APPLICATION' in os.environ,
+    'K_SERVICE' in os.environ
+]) else True)
 
 ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1', '0.0.0.0', 'www.instalacionesvml.com', 'instalacionesvml.com'])
 
@@ -36,7 +40,22 @@ if 'RAILWAY_ENVIRONMENT' in os.environ:
 if 'RENDER' in os.environ:
     ALLOWED_HOSTS.append(os.environ.get('RENDER_EXTERNAL_HOSTNAME'))
 
-# CSRF Trusted Origins for Railway
+# Add Google Cloud (App Engine / Cloud Run) to allowed hosts
+if 'GAE_APPLICATION' in os.environ:
+    # App Engine
+    ALLOWED_HOSTS.extend([
+        '.appspot.com',
+        '.run.app',
+        '*'  # Allow all for App Engine - restrict in production
+    ])
+if 'K_SERVICE' in os.environ:
+    # Cloud Run
+    ALLOWED_HOSTS.extend([
+        '.run.app',
+        '*'
+    ])
+
+# CSRF Trusted Origins
 CSRF_TRUSTED_ORIGINS = [
     'https://www.instalacionesvml.com',
     'https://instalacionesvml.com',
@@ -48,6 +67,13 @@ if 'RAILWAY_ENVIRONMENT' in os.environ:
     ])
     if os.environ.get('RAILWAY_PUBLIC_DOMAIN'):
         CSRF_TRUSTED_ORIGINS.append(f"https://{os.environ.get('RAILWAY_PUBLIC_DOMAIN')}")
+
+# Add Google Cloud to CSRF trusted origins
+if 'GAE_APPLICATION' in os.environ or 'K_SERVICE' in os.environ:
+    CSRF_TRUSTED_ORIGINS.extend([
+        'https://*.appspot.com',
+        'https://*.run.app',
+    ])
 
 # Application definition
 INSTALLED_APPS = [
@@ -90,6 +116,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'portfolio.context_processors.firebase_config',
             ],
         },
     },
@@ -109,6 +136,12 @@ DATABASES = {
 import dj_database_url
 if 'DATABASE_URL' in os.environ:
     DATABASES['default'] = dj_database_url.parse(os.environ.get('DATABASE_URL'))
+
+# Authentication backends
+AUTHENTICATION_BACKENDS = [
+    'portfolio.firebase_auth.FirebaseAuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend',
+]
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -162,6 +195,18 @@ cloudinary.config(
     api_key=env('CLOUDINARY_API_KEY', default=''),
     api_secret=env('CLOUDINARY_API_SECRET', default=''),
 )
+
+# Firebase configuration
+from photography_config.firebase import initialize_firebase
+initialize_firebase()
+
+# Firebase Web Configuration (for client-side)
+FIREBASE_API_KEY = env('FIREBASE_API_KEY', default='')
+FIREBASE_AUTH_DOMAIN = env('FIREBASE_AUTH_DOMAIN', default='')
+FIREBASE_PROJECT_ID = env('FIREBASE_PROJECT_ID', default='')
+FIREBASE_STORAGE_BUCKET = env('FIREBASE_STORAGE_BUCKET', default='')
+FIREBASE_MESSAGING_SENDER_ID = env('FIREBASE_MESSAGING_SENDER_ID', default='')
+FIREBASE_APP_ID = env('FIREBASE_APP_ID', default='')
 
 # Media files
 MEDIA_URL = '/media/'

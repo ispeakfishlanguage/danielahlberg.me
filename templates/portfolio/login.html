@@ -7,39 +7,54 @@
 <section class="py-5 mt-5">
     <div class="container">
         <div class="row justify-content-center">
-            <div class="col-md-6 col-lg-4">
+            <div class="col-md-6 col-lg-5">
                 <div class="card shadow">
                     <div class="card-body p-5">
                         <h2 class="text-center mb-4 h3 fw-light font-heading-secondary">Client Login</h2>
                         <p class="text-center text-muted mb-4 font-modern">Access your private photo gallery</p>
 
-                        <form method="post">
+                        <!-- Error/Success Messages -->
+                        <div id="auth-message" class="alert d-none" role="alert"></div>
+
+                        <!-- Email/Password Login Form -->
+                        <form id="login-form">
                             {% csrf_token %}
                             <div class="mb-3">
-                                <label for="{{ form.username.id_for_label }}" class="form-label">{{ form.username.label }}</label>
-                                {{ form.username }}
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
                             </div>
                             <div class="mb-3">
-                                <label for="{{ form.password.id_for_label }}" class="form-label">{{ form.password.label }}</label>
-                                {{ form.password }}
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
                             </div>
 
-                            {% if form.errors %}
-                                {% for field, errors in form.errors.items %}
-                                    {% for error in errors %}
-                                        <div class="alert alert-danger small" role="alert">
-                                            {{ error }}
-                                        </div>
-                                    {% endfor %}
-                                {% endfor %}
-                            {% endif %}
-
-                            <button type="submit" class="btn btn-dark w-100 fw-light text-uppercase font-modern">Login</button>
+                            <button type="submit" class="btn btn-dark w-100 fw-light text-uppercase font-modern mb-3" id="login-btn">
+                                <span class="spinner-border spinner-border-sm d-none" id="login-spinner"></span>
+                                <span id="login-text">Login</span>
+                            </button>
                         </form>
 
+                        <!-- Divider -->
+                        <div class="text-center my-3">
+                            <span class="text-muted small">OR</span>
+                        </div>
+
+                        <!-- Google Sign-In Button -->
+                        <button type="button" class="btn btn-outline-dark w-100 fw-light font-modern mb-3" id="google-signin-btn">
+                            <i class="fab fa-google me-2"></i>
+                            Sign in with Google
+                        </button>
+
+                        <!-- Additional Links -->
                         <div class="text-center mt-4">
+                            <p class="small text-muted font-modern mb-2">
+                                <a href="#" id="forgot-password-link" class="text-decoration-none">Forgot password?</a>
+                            </p>
                             <p class="small text-muted font-modern">
-                                Don't have access? <a href="{% url 'portfolio:contact' %}" class="text-decoration-none">Contact me</a>
+                                Don't have an account? <a href="{% url 'portfolio:register' %}" class="text-decoration-none">Register</a>
+                            </p>
+                            <p class="small text-muted font-modern">
+                                Need access? <a href="{% url 'portfolio:contact' %}" class="text-decoration-none">Contact me</a>
                             </p>
                         </div>
                     </div>
@@ -48,4 +63,125 @@
         </div>
     </div>
 </section>
+
+<!-- Password Reset Modal -->
+<div class="modal fade" id="passwordResetModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Reset Password</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="reset-message" class="alert d-none" role="alert"></div>
+                <form id="reset-password-form">
+                    <div class="mb-3">
+                        <label for="reset-email" class="form-label">Email Address</label>
+                        <input type="email" class="form-control" id="reset-email" required>
+                        <div class="form-text">We'll send you a password reset link</div>
+                    </div>
+                    <button type="submit" class="btn btn-dark w-100">Send Reset Link</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static 'js/firebase-auth.js' %}"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const loginForm = document.getElementById('login-form');
+    const googleSignInBtn = document.getElementById('google-signin-btn');
+    const forgotPasswordLink = document.getElementById('forgot-password-link');
+    const resetPasswordForm = document.getElementById('reset-password-form');
+    const authMessage = document.getElementById('auth-message');
+    const resetMessage = document.getElementById('reset-message');
+    const loginBtn = document.getElementById('login-btn');
+    const loginSpinner = document.getElementById('login-spinner');
+    const loginText = document.getElementById('login-text');
+
+    // Show message helper
+    function showMessage(element, message, type) {
+        element.className = `alert alert-${type}`;
+        element.textContent = message;
+        element.classList.remove('d-none');
+    }
+
+    // Hide message helper
+    function hideMessage(element) {
+        element.classList.add('d-none');
+    }
+
+    // Email/Password Login
+    loginForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        hideMessage(authMessage);
+
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+
+        // Show loading state
+        loginBtn.disabled = true;
+        loginSpinner.classList.remove('d-none');
+        loginText.textContent = 'Signing in...';
+
+        try {
+            await firebaseAuthManager.signInWithEmail(email, password);
+            showMessage(authMessage, 'Login successful! Redirecting...', 'success');
+
+            // Redirect to client gallery
+            setTimeout(() => {
+                window.location.href = '{% url "portfolio:client_gallery" %}';
+            }, 1500);
+        } catch (error) {
+            showMessage(authMessage, error.message, 'danger');
+            loginBtn.disabled = false;
+            loginSpinner.classList.add('d-none');
+            loginText.textContent = 'Login';
+        }
+    });
+
+    // Google Sign-In
+    googleSignInBtn.addEventListener('click', async function() {
+        hideMessage(authMessage);
+
+        try {
+            await firebaseAuthManager.signInWithGoogle();
+            showMessage(authMessage, 'Login successful! Redirecting...', 'success');
+
+            // Redirect to client gallery
+            setTimeout(() => {
+                window.location.href = '{% url "portfolio:client_gallery" %}';
+            }, 1500);
+        } catch (error) {
+            showMessage(authMessage, error.message, 'danger');
+        }
+    });
+
+    // Forgot Password
+    forgotPasswordLink.addEventListener('click', function(e) {
+        e.preventDefault();
+        const modal = new bootstrap.Modal(document.getElementById('passwordResetModal'));
+        modal.show();
+    });
+
+    // Password Reset Form
+    resetPasswordForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        hideMessage(resetMessage);
+
+        const email = document.getElementById('reset-email').value;
+
+        try {
+            await firebaseAuthManager.resetPassword(email);
+            showMessage(resetMessage, 'Password reset email sent! Please check your inbox.', 'success');
+            resetPasswordForm.reset();
+        } catch (error) {
+            showMessage(resetMessage, error.message, 'danger');
+        }
+    });
+});
+</script>
 {% endblock %}

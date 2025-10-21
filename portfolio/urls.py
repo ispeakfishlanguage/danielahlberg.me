@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from . import views_seo
 from . import views_verification
+from . import firebase_views
 
 app_name = 'portfolio'
 
@@ -10,8 +11,19 @@ urlpatterns = [
     path('portfolio/', views.portfolio, name='portfolio'),
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
-    path('login/', views.client_login, name='login'),
+
+    # Firebase Authentication URLs
+    path('login/', firebase_views.firebase_login_view, name='login'),
+    path('register/', firebase_views.firebase_register_view, name='register'),
     path('logout/', views.client_logout, name='logout'),
+
+    # Firebase API endpoints
+    path('api/auth/firebase-login/', firebase_views.firebase_login, name='firebase_login'),
+    path('api/auth/logout/', firebase_views.firebase_logout, name='firebase_logout'),
+    path('api/auth/verify-token/', firebase_views.verify_token, name='verify_token'),
+    path('api/auth/current-user/', firebase_views.get_current_user, name='current_user'),
+
+    # Gallery URLs
     path('gallery/', views.client_gallery, name='client_gallery'),
     path('gallery/<slug:slug>/', views.gallery_detail, name='gallery_detail'),
     path('api/filter-photos/', views.filter_photos, name='filter_photos'),
