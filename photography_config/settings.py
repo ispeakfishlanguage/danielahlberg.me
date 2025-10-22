@@ -199,13 +199,14 @@ FIREBASE_STORAGE_BUCKET = os.environ.get('FIREBASE_STORAGE_BUCKET', '')
 FIREBASE_MESSAGING_SENDER_ID = os.environ.get('FIREBASE_MESSAGING_SENDER_ID', '')
 FIREBASE_APP_ID = os.environ.get('FIREBASE_APP_ID', '')
 
-# Media files
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-# Use Cloudinary for production media storage
-if not DEBUG:
-    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+# Media files configuration
+if os.environ.get('USE_GCS') == 'True':
+    DEFAULT_FILE_STORAGE = 'storages.backends.gcs.GoogleCloudStorage'
+    GS_BUCKET_NAME = os.environ.get('GCS_BUCKET_NAME', 'danielahlberg-me-media')
+    MEDIA_URL = f'https://storage.googleapis.com/{GS_BUCKET_NAME}/'
+else:
+    MEDIA_URL = '/media/'
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
