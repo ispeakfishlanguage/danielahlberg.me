@@ -3,15 +3,8 @@ __pycache__
 db.sqlite3
 venv/
 .env
+.env.example
 .git/
+.gitignore
 *.log
 .DS_Store
-*.egg-info
-.pytest_cache
-.coverage
-htmlcov/
-node_modules/
-.vscode/
-.idea/
-*.swp
-*.swo
