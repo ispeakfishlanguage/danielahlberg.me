@@ -1,45 +1,28 @@
-# Use Python 3.11 slim image
 FROM python:3.11-slim
 
-# Set environment variables
-ENV PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1 \
-    PORT=8080
+ENV PYTHONUNBUFFERED True
+ENV APP_HOME /app
+WORKDIR $APP_HOME
 
-# Set work directory
-WORKDIR /app
-
-# Install system dependencies
+# Install system dependencies for Pillow (image processing) and PostgreSQL
 RUN apt-get update && apt-get install -y \
-    gcc \
+    libjpeg-dev \
+    zlib1g-dev \
     postgresql-client \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements file
-COPY requirements.txt .
-
 # Install Python dependencies
-RUN pip install --no-cache-dir -r requirements.txt
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt gunicorn
 
 # Copy project files
 COPY . .
 
+# Create media and static directories
+RUN mkdir -p media/photos media/thumbnails staticfiles
+
 # Collect static files
 RUN python manage.py collectstatic --noinput
 
-# Create a non-root user
-RUN useradd -m -u 1000 appuser && chown -R appuser:appuser /app
-USER appuser
-
-# Expose port
-EXPOSE 8080
-
-# Run gunicorn
-CMD exec gunicorn photography_config.wsgi:application \
-    --bind 0.0.0.0:$PORT \
-    --workers 2 \
-    --threads 4 \
-    --timeout 120 \
-    --access-logfile - \
-    --error-logfile - \
-    --log-level info
+# Run gunicorn (note: photography_config not photography_site)
+CMD exec gunicorn --bind :$PORT --workers 2 --threads 4 --timeout 0 photography_config.wsgi:application
