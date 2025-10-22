@@ -124,18 +124,20 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'photography_config.wsgi.application'
 
-# Database
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
-# Production database configuration for Render
+# Database - Use PostgreSQL on Cloud Run, SQLite for local development
 import dj_database_url
-if 'DATABASE_URL' in os.environ:
-    DATABASES['default'] = dj_database_url.parse(os.environ.get('DATABASE_URL'))
+if os.environ.get('DATABASE_URL'):
+    DATABASES = {
+        'default': dj_database_url.config(conn_max_age=600)
+    }
+else:
+    # SQLite for local development
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
 
 # Authentication backends
 AUTHENTICATION_BACKENDS = [
@@ -173,13 +175,7 @@ STATICFILES_DIRS = [
 ]
 
 # WhiteNoise configuration for serving static files in production
-if 'RAILWAY_ENVIRONMENT' in os.environ:
-    # Use CompressedStaticFilesStorage (no manifest to avoid 500 errors)
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
-else:
-    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
-
-WHITENOISE_ALLOW_ALL_ORIGINS = True
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Cloudinary configuration
 import cloudinary
@@ -210,7 +206,11 @@ FIREBASE_APP_ID = env('FIREBASE_APP_ID', default='')
 
 # Media files
 MEDIA_URL = '/media/'
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# Use Cloudinary for production media storage
+if not DEBUG:
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Default primary key field type
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
@@ -222,6 +222,7 @@ LOGOUT_REDIRECT_URL = 'portfolio:home'
 
 # Security settings for production
 if not DEBUG:
+    SECURE_SSL_REDIRECT = True
     SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
