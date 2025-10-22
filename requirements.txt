@@ -8,3 +8,4 @@ dj-database-url
 cloudinary
 django-cloudinary-storage
 firebase-admin
+django-storages[google]
