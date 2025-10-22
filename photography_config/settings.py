@@ -1,31 +1,20 @@
 import os
 from pathlib import Path
-import environ
+
+# Load .env file for local development
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Environment variables
-env = environ.Env(
-    DEBUG=(bool, False)
-)
-
-# Take environment variables from .env file
-environ.Env.read_env(BASE_DIR / '.env')
-
 # SECURITY WARNING: keep the secret key used in production secret!
-# Generate a default key for Railway if not provided
-import secrets
-SECRET_KEY = env('SECRET_KEY', default=secrets.token_urlsafe(50) if 'RAILWAY_ENVIRONMENT' in os.environ else 'django-insecure-your-secret-key-here')
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env('DEBUG', default=False if any([
-    'RAILWAY_ENVIRONMENT' in os.environ,
-    'GAE_APPLICATION' in os.environ,
-    'K_SERVICE' in os.environ
-]) else True)
+DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=['localhost', '127.0.0.1', '0.0.0.0', 'www.instalacionesvml.com', 'instalacionesvml.com'])
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost').split(',')
 
 # Add Railway and Render to allowed hosts in production
 if 'RAILWAY_ENVIRONMENT' in os.environ:
@@ -187,15 +176,15 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 import cloudinary
 
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': env('CLOUDINARY_CLOUD_NAME', default=''),
-    'API_KEY': env('CLOUDINARY_API_KEY', default=''),
-    'API_SECRET': env('CLOUDINARY_API_SECRET', default=''),
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME', ''),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY', ''),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET', ''),
 }
 
 cloudinary.config(
-    cloud_name=env('CLOUDINARY_CLOUD_NAME', default=''),
-    api_key=env('CLOUDINARY_API_KEY', default=''),
-    api_secret=env('CLOUDINARY_API_SECRET', default=''),
+    cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME', ''),
+    api_key=os.environ.get('CLOUDINARY_API_KEY', ''),
+    api_secret=os.environ.get('CLOUDINARY_API_SECRET', ''),
 )
 
 # Firebase configuration
@@ -203,12 +192,12 @@ from photography_config.firebase import initialize_firebase
 initialize_firebase()
 
 # Firebase Web Configuration (for client-side)
-FIREBASE_API_KEY = env('FIREBASE_API_KEY', default='')
-FIREBASE_AUTH_DOMAIN = env('FIREBASE_AUTH_DOMAIN', default='')
-FIREBASE_PROJECT_ID = env('FIREBASE_PROJECT_ID', default='')
-FIREBASE_STORAGE_BUCKET = env('FIREBASE_STORAGE_BUCKET', default='')
-FIREBASE_MESSAGING_SENDER_ID = env('FIREBASE_MESSAGING_SENDER_ID', default='')
-FIREBASE_APP_ID = env('FIREBASE_APP_ID', default='')
+FIREBASE_API_KEY = os.environ.get('FIREBASE_API_KEY', '')
+FIREBASE_AUTH_DOMAIN = os.environ.get('FIREBASE_AUTH_DOMAIN', '')
+FIREBASE_PROJECT_ID = os.environ.get('FIREBASE_PROJECT_ID', '')
+FIREBASE_STORAGE_BUCKET = os.environ.get('FIREBASE_STORAGE_BUCKET', '')
+FIREBASE_MESSAGING_SENDER_ID = os.environ.get('FIREBASE_MESSAGING_SENDER_ID', '')
+FIREBASE_APP_ID = os.environ.get('FIREBASE_APP_ID', '')
 
 # Media files
 MEDIA_URL = '/media/'
